@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body text-slate-800 bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    @apply bg-gold-500/20 text-charcoal-900;
+  }
+}
+
+@layer components {
+  /* Primary Button - Gold */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-8 py-4
+           bg-gradient-gold text-charcoal-900 font-semibold text-sm tracking-wide uppercase
+           rounded-xl overflow-hidden
+           transition-all duration-300 ease-premium
+           shadow-gold hover:shadow-gold-lg
+           transform hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-shimmer translate-x-[-100%] hover:translate-x-[100%]
+           transition-transform duration-700 ease-linear;
+  }
+
+  /* Secondary Button - Outline */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4
+           border-2 border-gold-500 text-gold-600 font-semibold text-sm tracking-wide uppercase
+           rounded-xl bg-transparent
+           transition-all duration-300 ease-premium
+           hover:bg-gold-500 hover:text-charcoal-900;
+  }
+
+  /* Ghost Button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           text-slate-700 font-medium text-sm
+           rounded-lg bg-transparent
+           transition-all duration-200 ease-premium
+           hover:bg-slate-100 hover:text-charcoal-900;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-100
+           shadow-card transition-all duration-300 ease-premium
+           hover:shadow-card-hover hover:border-gold-200;
+  }
+
+  .card-dark {
+    @apply bg-charcoal-900 rounded-2xl border border-charcoal-800
+           shadow-premium-lg transition-all duration-300 ease-premium
+           hover:border-gold-500/30;
+  }
+
+  /* Premium section */
+  .section {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .section-dark {
+    @apply py-20 md:py-28 lg:py-32 bg-gradient-premium text-white;
+  }
+
+  /* Container */
+  .container-wide {
+    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold-100 text-gold-700 border border-gold-200;
+  }
+
+  .badge-royal {
+    @apply badge bg-royal-50 text-royal-700 border border-royal-100;
+  }
+
+  /* Form Inputs */
+  .input-field {
+    @apply w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl
+           text-slate-800 placeholder:text-slate-400
+           focus:bg-white focus:border-gold-400 focus:ring-4 focus:ring-gold-100 focus:outline-none
+           transition-all duration-200 ease-premium;
+  }
+
+  .input-label {
+    @apply block text-sm font-semibold text-charcoal-800 mb-2;
+  }
+
+  /* Overlays */
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-hero;
+  }
+
+  .overlay-gradient {
+    @apply absolute inset-0 bg-gradient-overlay;
+  }
+
+  /* Text Gradient */
+  .text-gradient-gold {
+    @apply bg-gradient-text bg-clip-text text-transparent;
+  }
+
+  /* Divider */
+  .divider {
+    @apply h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent;
+  }
+
+  .divider-gold {
+    @apply h-px bg-gradient-to-r from-transparent via-gold-300 to-transparent;
+  }
+
+  /* Status Pills */
+  .status-new {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold bg-royal-100 text-royal-700;
+  }
+
+  .status-progress {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700;
+  }
+
+  .status-complete {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700;
+  }
+}
+
+@layer utilities {
+  /* Smooth scrolling anchor offset */
+  .scroll-offset {
+    scroll-margin-top: 100px;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Aspect ratios */
+  .aspect-product {
+    aspect-ratio: 4/3;
+  }
+
+  .aspect-hero {
+    aspect-ratio: 16/9;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-charcoal-900/80 backdrop-blur-lg border border-charcoal-700/50;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9d1db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3b1c4;
+}
+
+/* Premium loader */
+.loader-premium {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #eef1f5;
+  border-bottom-color: #C6A052;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Image loading placeholder */
+.image-skeleton {
+  @apply bg-slate-100 animate-pulse relative overflow-hidden;
+}
+
+.image-skeleton::after {
+  content: '';
+  @apply absolute inset-0 bg-shimmer animate-shimmer;
+}
+
+/* Mega Menu Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.3s ease-out forwards;
+}
+
+.animate-fade-out-up {
+  animation: fadeOutUp 0.2s ease-in forwards;
+}
+
+/* Mega menu backdrop */
+.mega-menu-backdrop {
+  backdrop-filter: blur(4px);
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.05), transparent);
+}

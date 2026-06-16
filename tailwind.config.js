@@ -1,0 +1,165 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        // Premium Dark Theme
+        charcoal: {
+          50: '#f7f7f7',
+          100: '#e3e3e3',
+          200: '#c8c8c8',
+          300: '#a4a4a4',
+          400: '#818181',
+          500: '#666666',
+          600: '#515151',
+          700: '#434343',
+          800: '#383838',
+          900: '#1c1c1c',
+          950: '#0d0d0d',
+        },
+        // Elegant Gold Accent
+        gold: {
+          50: '#fefdf8',
+          100: '#fdf9e8',
+          200: '#fbf1c8',
+          300: '#f8e598',
+          400: '#f3d362',
+          500: '#C6A052',
+          600: '#a8863f',
+          700: '#8a6a33',
+          800: '#6f542b',
+          900: '#5c4525',
+          950: '#332814',
+        },
+        // Sophisticated Blue for CTAs
+        royal: {
+          50: '#f0f7ff',
+          100: '#e0effe',
+          200: '#bae0fd',
+          300: '#7ccafc',
+          400: '#36b0fa',
+          500: '#0c8ce6',
+          600: '#006dc4',
+          700: '#0057a0',
+          800: '#054984',
+          900: '#0a3e6e',
+          950: '#072850',
+        },
+        // Neutral Slate
+        slate: {
+          50: '#fafbfc',
+          100: '#f4f6f8',
+          200: '#eef1f5',
+          300: '#e2e7ed',
+          400: '#c9d1db',
+          500: '#a3b1c4',
+          600: '#7a8aa3',
+          700: '#5b6b82',
+          800: '#3a4759',
+          900: '#252f3d',
+          950: '#161c27',
+        },
+      },
+      fontFamily: {
+        heading: ['Poppins', 'Inter', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'display-1': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'display-2': ['3.5rem', { lineHeight: '1.15', letterSpacing: '-0.02em', fontWeight: '700' }],
+        'heading-1': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'heading-2': ['2.25rem', { lineHeight: '1.25', letterSpacing: '-0.01em', fontWeight: '600' }],
+        'heading-3': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }],
+        'heading-4': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.6' }],
+        'body': ['1rem', { lineHeight: '1.6' }],
+        'body-sm': ['0.875rem', { lineHeight: '1.5' }],
+        'caption': ['0.75rem', { lineHeight: '1.4' }],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '28': '7rem',
+        '30': '7.5rem',
+      },
+      boxShadow: {
+        'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.1), 0 2px 8px -2px rgba(0, 0, 0, 0.06)',
+        'premium-lg': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 4px 16px -4px rgba(0, 0, 0, 0.1)',
+        'premium-xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        'gold': '0 4px 20px -4px rgba(198, 160, 82, 0.4)',
+        'gold-lg': '0 10px 40px -10px rgba(198, 160, 82, 0.35)',
+        'card': '0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+      },
+      backgroundImage: {
+        'gradient-premium': 'linear-gradient(180deg, #1c1c1c 0%, #0d0d0d 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #C6A052 0%, #dbb96a 50%, #C6A052 100%)',
+        'gradient-hero': 'linear-gradient(135deg, rgba(28, 28, 28, 0.95) 0%, rgba(13, 13, 13, 0.85) 100%)',
+        'gradient-overlay': 'linear-gradient(180deg, transparent 0%, rgba(13, 13, 13, 0.7) 50%, rgba(13, 13, 13, 0.95) 100%)',
+        'gradient-text': 'linear-gradient(135deg, #f3d362 0%, #C6A052 50%, #dbb96a 100%)',
+        'gradient-cta': 'linear-gradient(135deg, #0057a0 0%, #0c8ce6 100%)',
+        'shimmer': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.6s ease-out forwards',
+        'fade-in-up': 'fadeInUp 0.7s ease-out forwards',
+        'fade-in-down': 'fadeInDown 0.7s ease-out forwards',
+        'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+        'slide-in-left': 'slideInLeft 0.5s ease-out forwards',
+        'scale-in': 'scaleIn 0.5s ease-out forwards',
+        'shimmer': 'shimmer 2s linear infinite',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInDown: {
+          '0%': { opacity: '0', transform: 'translateY(-30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        glow: {
+          '0%': { boxShadow: '0 0 20px rgba(198, 160, 82, 0.3)' },
+          '100%': { boxShadow: '0 0 30px rgba(198, 160, 82, 0.6)' },
+        },
+      },
+      transitionTimingFunction: {
+        'premium': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem',
+      },
+    },
+  },
+  plugins: [],
+};
