@@ -57,6 +57,8 @@ function AppRoutes() {
       <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
       <Route path="/products" element={<PublicLayout><ProductsPage /></PublicLayout>} />
       <Route path="/products/category/:categorySlug" element={<PublicLayout><ProductsPage /></PublicLayout>} />
+      <Route path="/products/category/:categorySlug/:subcategorySlug" element={<PublicLayout><ProductsPage /></PublicLayout>} />
+      <Route path="/products/category/:categorySlug/:subcategorySlug/:childSlug" element={<PublicLayout><ProductsPage /></PublicLayout>} />
       <Route path="/gallery" element={<PublicLayout><GalleryPage /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><AboutPage /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />

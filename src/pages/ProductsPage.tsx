@@ -6,7 +6,7 @@ import type { Product, Category, Subcategory } from '../lib/types';
 import { ProductDetailModal } from '../components/ProductDetailModal';
 
 export function ProductsPage() {
-  const { categorySlug } = useParams();
+  const { categorySlug, subcategorySlug, childSlug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -14,7 +14,6 @@ export function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -23,20 +22,47 @@ export function ProductsPage() {
     return categories.find((c) => c.slug === categorySlug);
   }, [categorySlug, categories]);
 
+  const currentSubcategory = useMemo(() => {
+    if (!subcategorySlug) return null;
+    return subcategories.find((s) => s.slug === subcategorySlug);
+  }, [subcategorySlug, subcategories]);
+
+  const currentChildSubcategory = useMemo(() => {
+    if (!childSlug) return null;
+    return subcategories.find((s) => s.slug === childSlug);
+  }, [childSlug, subcategories]);
+
   const filteredSubcategories = useMemo(() => {
-    if (!currentCategory) return subcategories;
-    return subcategories.filter((s) => s.category_id === currentCategory.id);
+    if (!currentCategory) return [];
+    // Get top-level subcategories for the current category
+    return subcategories.filter((s) => s.category_id === currentCategory.id && !s.parent_id);
   }, [currentCategory, subcategories]);
+
+  const childSubcategories = useMemo(() => {
+    if (!currentSubcategory) return [];
+    // Get child subcategories for the current subcategory
+    return subcategories.filter((s) => s.parent_id === currentSubcategory.id);
+  }, [currentSubcategory, subcategories]);
 
   const filteredProducts = useMemo(() => {
     let filtered = products;
 
+    // Filter by category
     if (currentCategory) {
       filtered = filtered.filter((p) => p.category_id === currentCategory.id);
     }
 
-    if (selectedSubcategory) {
-      filtered = filtered.filter((p) => p.subcategory_id === selectedSubcategory);
+    // Filter by child subcategory (most specific)
+    if (currentChildSubcategory) {
+      filtered = filtered.filter((p) => p.subcategory_id === currentChildSubcategory.id);
+    }
+    // Filter by subcategory
+    else if (currentSubcategory) {
+      // Include products in this subcategory or its children
+      const subcategoryIds = subcategories
+        .filter(s => s.parent_id === currentSubcategory.id || s.id === currentSubcategory.id)
+        .map(s => s.id);
+      filtered = filtered.filter((p) => p.subcategory_id && subcategoryIds.includes(p.subcategory_id));
     }
 
     if (searchQuery) {
@@ -49,7 +75,7 @@ export function ProductsPage() {
     }
 
     return filtered.filter((p) => p.status === 'active');
-  }, [products, currentCategory, selectedSubcategory, searchQuery]);
+  }, [products, currentCategory, currentSubcategory, currentChildSubcategory, searchQuery, subcategories]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,14 +115,34 @@ export function ProductsPage() {
 
         <div className="container-wide relative z-10">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm">
+          <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm flex-wrap">
             <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
             {currentCategory ? (
               <>
                 <Link to="/products" className="hover:text-gold-400 transition-colors">Products</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-gold-400">{currentCategory.name}</span>
+                {currentSubcategory ? (
+                  <>
+                    <Link to={`/products/category/${currentCategory.slug}`} className="hover:text-gold-400 transition-colors">
+                      {currentCategory.name}
+                    </Link>
+                    <ChevronRight className="w-4 h-4" />
+                    {currentChildSubcategory ? (
+                      <>
+                        <Link to={`/products/category/${currentCategory.slug}/${currentSubcategory.slug}`} className="hover:text-gold-400 transition-colors">
+                          {currentSubcategory.name}
+                        </Link>
+                        <ChevronRight className="w-4 h-4" />
+                        <span className="text-gold-400">{currentChildSubcategory.name}</span>
+                      </>
+                    ) : (
+                      <span className="text-gold-400">{currentSubcategory.name}</span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-gold-400">{currentCategory.name}</span>
+                )}
               </>
             ) : (
               <span className="text-gold-400">Products</span>
@@ -109,10 +155,12 @@ export function ProductsPage() {
             </div>
             <div>
               <h1 className="font-heading text-4xl md:text-5xl font-bold mb-3">
-                {currentCategory ? currentCategory.name : 'All Products'}
+                {currentChildSubcategory?.name || currentSubcategory?.name || currentCategory?.name || 'All Products'}
               </h1>
-              {currentCategory?.description && (
-                <p className="text-slate-300 text-lg max-w-2xl">{currentCategory.description}</p>
+              {(currentChildSubcategory || currentSubcategory || currentCategory)?.description && (
+                <p className="text-slate-300 text-lg max-w-2xl">
+                  {(currentChildSubcategory || currentSubcategory || currentCategory)?.description}
+                </p>
               )}
             </div>
           </div>
@@ -184,32 +232,39 @@ export function ProductsPage() {
                 {/* Subcategories */}
                 {filteredSubcategories.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-charcoal-900 mb-4 text-sm uppercase tracking-wider">Subcategories</h4>
+                    <h4 className="font-semibold text-charcoal-900 mb-4 text-sm uppercase tracking-wider">Categories</h4>
                     <ul className="space-y-2">
-                      <li>
-                        <button
-                          onClick={() => setSelectedSubcategory(null)}
-                          className={`w-full text-left py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
-                            !selectedSubcategory
-                              ? 'bg-gradient-gold text-charcoal-900'
-                              : 'text-slate-600 hover:bg-slate-50'
-                          }`}
-                        >
-                          All
-                        </button>
-                      </li>
                       {filteredSubcategories.map((sub) => (
                         <li key={sub.id}>
-                          <button
-                            onClick={() => setSelectedSubcategory(sub.id)}
-                            className={`w-full text-left py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
-                              selectedSubcategory === sub.id
+                          <Link
+                            to={`/products/category/${currentCategory?.slug}/${sub.slug}`}
+                            className={`block py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
+                              currentSubcategory?.id === sub.id
                                 ? 'bg-gradient-gold text-charcoal-900'
                                 : 'text-slate-600 hover:bg-slate-50'
                             }`}
                           >
                             {sub.name}
-                          </button>
+                          </Link>
+                          {/* Show child subcategories if this subcategory is selected */}
+                          {currentSubcategory?.id === sub.id && childSubcategories.length > 0 && (
+                            <ul className="ml-3 mt-1 space-y-1 border-l-2 border-gold-200 pl-3">
+                              {childSubcategories.map((child) => (
+                                <li key={child.id}>
+                                  <Link
+                                    to={`/products/category/${currentCategory?.slug}/${sub.slug}/${child.slug}`}
+                                    className={`block py-1.5 px-3 rounded-lg transition-all text-xs font-medium ${
+                                      currentChildSubcategory?.id === child.id
+                                        ? 'bg-gold-100 text-gold-700'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                    }`}
+                                  >
+                                    {child.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -268,9 +323,9 @@ export function ProductsPage() {
                   </div>
                   <h3 className="font-heading text-xl font-semibold text-charcoal-900 mb-2">No products found</h3>
                   <p className="text-slate-500 mb-6">Try adjusting your filters or search query</p>
-                  <button onClick={() => { setSearchQuery(''); setSelectedSubcategory(null); }} className="btn-primary">
-                    Reset Filters
-                  </button>
+                  <Link to="/products" className="btn-primary inline-block">
+                    View All Products
+                  </Link>
                 </div>
               ) : (
                 <div className={viewMode === 'grid'
