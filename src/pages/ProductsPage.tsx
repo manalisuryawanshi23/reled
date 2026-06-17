@@ -5,6 +5,49 @@ import { supabase } from '../lib/supabase';
 import type { Product, Category, Subcategory } from '../lib/types';
 import { ProductDetailModal } from '../components/ProductDetailModal';
 
+const subcategoryFallbackImages: Record<string, string> = {
+  'downlights': 'https://images.unsplash.com/photo-1565538810844-1e119de867c2?auto=format&fit=crop&w=600&q=80',
+  'spotlights': 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80',
+  'track-lights': 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80',
+  'linear-lights': 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=600&q=80',
+  'panel-lights': 'https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?auto=format&fit=crop&w=600&q=80',
+  'cob-lights': 'https://images.unsplash.com/photo-1558211583-d26f610c1eb1?auto=format&fit=crop&w=600&q=80',
+  'magnetic-lights': 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80',
+  'magnetic-track': 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80',
+  'magnetic-linear': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80',
+  'profile-lights': 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80',
+  'silicone-profiles': 'https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=600&q=80',
+  'outdoor-lights': 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=600&q=80',
+  'flood-lights': 'https://images.unsplash.com/photo-1558486012-817176f84c6d?auto=format&fit=crop&w=600&q=80',
+  'street-lights': 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80',
+  'garden-lights': 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=600&q=80',
+  'wall-lights': 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80',
+  'high-bay': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80',
+  'well-glass': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80',
+  'facade-lights': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80',
+  'wall-washers': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+  'linear-wall-washers': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+  'underwater-lights': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+  'fountain-lights': 'https://images.unsplash.com/photo-1554123158-8884f177c4b3?auto=format&fit=crop&w=600&q=80',
+  'swimming-pool-lights': 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80',
+  'ev-chargers': 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80',
+  'ac-chargers': 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80',
+  'dc-chargers': 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80',
+};
+
+const getSubcategoryFallbackImage = (slug: string, name: string): string => {
+  const normalizedSlug = slug.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  if (subcategoryFallbackImages[normalizedSlug]) {
+    return subcategoryFallbackImages[normalizedSlug];
+  }
+  const keys = Object.keys(subcategoryFallbackImages);
+  const matchedKey = keys.find(k => normalizedSlug.includes(k) || k.includes(normalizedSlug));
+  if (matchedKey) {
+    return subcategoryFallbackImages[matchedKey];
+  }
+  return 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80';
+};
+
 export function ProductsPage() {
   const { categorySlug, subcategorySlug, childSlug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -275,6 +318,48 @@ export function ProductsPage() {
 
             {/* Products Grid */}
             <div className="flex-1">
+              {/* Subcategories Grid */}
+              {currentCategory && !subcategorySlug && filteredSubcategories.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="font-heading text-2xl font-bold text-charcoal-900 mb-6">Browse {currentCategory.name} Subcategories</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {filteredSubcategories.map((sub) => {
+                      const subProductCount = products.filter(p => p.subcategory_id === sub.id || (p.subcategory_id && subcategories.filter(child => child.parent_id === sub.id).map(child => child.id).includes(p.subcategory_id))).length;
+                      const imageUrl = sub.image_url || getSubcategoryFallbackImage(sub.slug, sub.name);
+                      return (
+                        <Link
+                          key={sub.id}
+                          to={`/products/category/${currentCategory.slug}/${sub.slug}`}
+                          className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-premium-lg transition-all duration-300 p-3 flex flex-col hover:border-gold-300 transform hover:-translate-y-1"
+                        >
+                          <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-50 mb-3 relative">
+                            <img
+                              src={imageUrl}
+                              alt={sub.name}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              onError={(e) => {
+                                // Fallback if image fails to load
+                                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80';
+                              }}
+                            />
+                            {subProductCount > 0 && (
+                              <div className="absolute bottom-2 right-2">
+                                <span className="bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                                  {subProductCount} {subProductCount === 1 ? 'Product' : 'Products'}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          <h3 className="font-heading font-semibold text-charcoal-800 group-hover:text-gold-600 transition-colors text-sm truncate">
+                            {sub.name}
+                          </h3>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Toolbar */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div className="flex items-center gap-4">
@@ -336,10 +421,10 @@ export function ProductsPage() {
                     <div
                       key={product.id}
                       onClick={() => setSelectedProduct(product)}
-                      className={`group cursor-pointer ${
+                      className={`group cursor-pointer transform hover:-translate-y-1 transition-all duration-300 ${
                         viewMode === 'grid'
-                          ? 'bg-white rounded-2xl border border-slate-100 hover:border-gold-200 overflow-hidden transition-all duration-300 hover:shadow-premium-lg'
-                          : 'bg-white rounded-xl border border-slate-100 hover:border-gold-200 p-4 flex gap-6 transition-all duration-300 hover:shadow-premium-lg'
+                          ? 'bg-white rounded-2xl border border-slate-100 hover:border-gold-200 overflow-hidden hover:shadow-gold-lg'
+                          : 'bg-white rounded-xl border border-slate-100 hover:border-gold-200 p-4 flex gap-6 hover:shadow-premium-lg'
                       }`}
                     >
                       {/* Image */}

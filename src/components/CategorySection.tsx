@@ -91,11 +91,11 @@ export function CategorySection() {
                   {category.name}
                 </h3>
                 {category.description && (
-                  <p className="text-white/70 text-sm line-clamp-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white/70 text-sm line-clamp-2 mb-4 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                     {category.description}
                   </p>
                 )}
-                <div className="flex items-center gap-2 text-gold-400 font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                <div className="flex items-center gap-2 text-gold-400 font-medium text-sm md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
                   <span>Explore Category</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>

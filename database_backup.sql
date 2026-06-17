@@ -10,7 +10,7 @@
 -- Settings Table
 CREATE TABLE IF NOT EXISTS settings (
     id SERIAL PRIMARY KEY,
-    company_name TEXT DEFAULT 'RELED',
+    company_name TEXT DEFAULT 'LedPrisha',
     tagline TEXT DEFAULT 'Illuminating Excellence',
     address TEXT,
     phone_1 TEXT,
@@ -169,9 +169,9 @@ CREATE TABLE IF NOT EXISTS team_members (
 
 -- Settings Data
 INSERT INTO settings (id, company_name, tagline, address, phone_1, whatsapp_number, email, hero_slides, about_text, years_experience, projects_completed, iso_certified) VALUES
-(1, 'RELED', 'Illuminating Excellence', '123 Industrial Area, New Delhi, India', '+91-9876543210', '+919876543210', 'info@reled.com',
+(1, 'LedPrisha', 'Illuminating Excellence', '123 Industrial Area, New Delhi, India', '+91-9876543210', '+919876543210', 'info@ledprisha.com',
 '[{"headline":"Illuminate Your World","subheadline":"Premium LED lighting solutions for every space","image_url":"https://images.pexels.com/photos/1125136/pexels-photo-1125136.jpeg?auto=compress&cs=tinysrgb&w=1920","cta_text":"Explore Products","cta_link":"/products"},{"headline":"Architectural Excellence","subheadline":"Transform buildings into stunning visual experiences","image_url":"https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1920","cta_text":"View Solutions","cta_link":"/products/category/architectural"},{"headline":"Industrial Strength","subheadline":"Reliable lighting for demanding environments","image_url":"https://images.pexels.com/photos/257740/pexels-photo-257740.jpeg?auto=compress&cs=tinysrgb&w=1920","cta_text":"Learn More","cta_link":"/sectors"}]',
-'RELED is a leading manufacturer and supplier of premium LED lighting solutions. We specialize in indoor, outdoor, architectural, and industrial lighting systems designed to meet the highest standards of quality, efficiency, and aesthetics. Our products are trusted by businesses across India for their reliability, energy efficiency, and superior performance.',
+'LedPrisha is a leading manufacturer and supplier of premium LED lighting solutions. We specialize in indoor, outdoor, architectural, and industrial lighting systems designed to meet the highest standards of quality, efficiency, and aesthetics. Our products are trusted by businesses across India for their reliability, energy efficiency, and superior performance.',
 10, 500, true)
 ON CONFLICT (id) DO NOTHING;
 

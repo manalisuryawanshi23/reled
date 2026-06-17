@@ -154,7 +154,7 @@ export function SectorsSection() {
               </p>
 
               {/* Link */}
-              <div className="flex items-center gap-2 text-gold-600 font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+              <div className="flex items-center gap-2 text-gold-600 font-medium text-sm md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
                 <span>Learn More</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>

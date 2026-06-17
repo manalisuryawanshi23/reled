@@ -69,7 +69,7 @@ export function AboutPage() {
             <Link to="/" className="hover:text-accent-400 transition-colors">Home</Link>
             <span className="text-accent-400"> / About Us</span>
           </div>
-          <h1 className="font-heading text-4xl md:text-5xl font-bold">About RELED</h1>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold">About {settings?.company_name || 'LedPrisha'}</h1>
         </div>
       </section>
 
@@ -78,16 +78,16 @@ export function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-                {settings.about_image_url ? (
+                {settings?.about_image_url ? (
                   <img
                     src={settings.about_image_url}
-                    alt="About RELED"
+                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <img
                     src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="About RELED"
+                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
                     className="w-full h-full object-cover"
                   />
                 )}

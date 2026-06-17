@@ -10,12 +10,12 @@ interface SettingsContextType {
 
 const defaultSettings: Settings = {
   id: 1,
-  company_name: 'RELED',
+  company_name: 'LedPrisha',
   tagline: 'Illuminating Excellence',
   address: '123 Industrial Area, New Delhi, India',
   phone_1: '+91-9876543210',
   whatsapp_number: '+919876543210',
-  email: 'info@reled.com',
+  email: 'info@ledprisha.com',
   years_experience: 10,
   projects_completed: 500,
   iso_certified: true,

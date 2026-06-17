@@ -53,16 +53,16 @@ export function AboutSection() {
           <div className="relative">
             <div className="relative z-10">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-premium-xl">
-                {settings.about_image_url ? (
+                {settings?.about_image_url ? (
                   <img
                     src={settings.about_image_url}
-                    alt="About RELED"
+                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <img
                     src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="About RELED"
+                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
                     className="w-full h-full object-cover"
                   />
                 )}

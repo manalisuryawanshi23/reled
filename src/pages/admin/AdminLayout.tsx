@@ -18,6 +18,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useSettings } from '../../context/SettingsContext';
 
 const navItems = [
   { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
@@ -36,6 +37,7 @@ export function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { settings } = useSettings();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,7 +59,7 @@ export function AdminLayout() {
               <div className="w-10 h-10 bg-gradient-to-br from-accent-500 to-accent-600 rounded-lg flex items-center justify-center">
                 <Zap className="w-6 h-6 text-white" />
               </div>
-              {sidebarOpen && <span className="font-heading font-bold text-lg">RELED</span>}
+              {sidebarOpen && <span className="font-heading font-bold text-lg">{settings?.company_name || 'LedPrisha'}</span>}
             </Link>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}

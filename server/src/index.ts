@@ -193,9 +193,14 @@ app.get('/api/:table', async (req: Request, res: Response) => {
           COALESCE(
             json_build_object('id', c.id, 'name', c.name), 
             NULL
-          ) as category
+          ) as category,
+          COALESCE(
+            json_build_object('id', ps.id, 'name', ps.name), 
+            NULL
+          ) as parent
         FROM subcategories s
         LEFT JOIN categories c ON s.category_id = c.id
+        LEFT JOIN subcategories ps ON s.parent_id = ps.id
         WHERE 1=1
       `;
     } else {

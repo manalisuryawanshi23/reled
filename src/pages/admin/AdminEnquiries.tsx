@@ -238,7 +238,7 @@ export function AdminEnquiries() {
               </div>
               <div className="flex gap-3 pt-4">
                 <button onClick={() => handleDelete(selectedEnquiry.id)} className="btn-secondary flex-1 text-red-600 border-red-200 hover:bg-red-50">Delete</button>
-                <a href={`https://wa.me/${selectedEnquiry.phone}?text=${encodeURIComponent('Hi, regarding your RELED enquiry...')}`} target="_blank" rel="noopener noreferrer" className="btn-primary flex-1 text-center">WhatsApp</a>
+                <a href={`https://wa.me/${selectedEnquiry.phone}?text=${encodeURIComponent('Hi, regarding your enquiry...')}`} target="_blank" rel="noopener noreferrer" className="btn-primary flex-1 text-center">WhatsApp</a>
               </div>
             </div>
           </div>

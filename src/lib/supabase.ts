@@ -9,14 +9,22 @@ class QueryBuilder {
   private isSingle: boolean = false;
   private method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET';
   private payload: any = null;
+  private countOption: string | null = null;
+  private isHead: boolean = false;
 
   constructor(tableName: string) {
     this.tableName = tableName;
   }
 
-  select(columns: string = '*') {
+  select(columns: string = '*', options?: { count?: 'exact' | 'planned' | 'estimated'; head?: boolean }) {
     this.selects = columns;
     this.method = 'GET';
+    if (options?.count) {
+      this.countOption = options.count;
+    }
+    if (options?.head) {
+      this.isHead = options.head;
+    }
     return this;
   }
 
@@ -102,15 +110,21 @@ class QueryBuilder {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        resolve({ data: null, error: { message: errorData.error || 'Database operation failed' } });
+        resolve({ data: null, error: { message: errorData.error || 'Database operation failed' }, count: 0 });
         return;
       }
 
       const data = await res.json();
-      resolve({ data, error: null });
+      const countValue = Array.isArray(data) ? data.length : data ? 1 : 0;
+      
+      resolve({ 
+        data: this.isHead ? null : data, 
+        error: null,
+        count: countValue 
+      });
     } catch (err: any) {
       console.error(`Local API call error on table ${this.tableName}:`, err.message);
-      resolve({ data: null, error: { message: err.message } });
+      resolve({ data: null, error: { message: err.message }, count: 0 });
     }
   }
 }
