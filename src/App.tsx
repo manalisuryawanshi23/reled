@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SettingsProvider } from './context/SettingsContext';
-import { TopBar } from './components/TopBar';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingButtons } from './components/FloatingButtons';
@@ -27,7 +26,6 @@ import { AdminSettings } from './pages/admin/AdminSettings';
 function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <TopBar />
       <Navbar />
       {children}
       <Footer />
