@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, Link, useSearchParams, useLocation } from 'react-router-dom';
 import { Search, Filter, X, ChevronRight, Zap, LayoutGrid, List, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { Product, Category, Subcategory } from '../lib/types';
@@ -51,6 +51,7 @@ const getSubcategoryFallbackImage = (slug: string, name: string): string => {
 export function ProductsPage() {
   const { categorySlug, subcategorySlug, childSlug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
@@ -59,6 +60,12 @@ export function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  // Scroll to top whenever the category / subcategory route changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setShowFilters(false); // also close mobile filter panel on route change
+  }, [location.pathname]);
 
   const currentCategory = useMemo(() => {
     if (!categorySlug) return null;
@@ -214,9 +221,13 @@ export function ProductsPage() {
       <section className="section">
         <div className="container-wide">
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar Filters */}
-            <aside className={`${showFilters ? 'block' : 'hidden lg:block'} lg:w-72 flex-shrink-0`}>
-              <div className="sticky top-28 bg-white rounded-2xl border border-slate-100 p-6 shadow-card">
+            {/* Sidebar Filters — shown as overlay on mobile, always visible on lg+ */}
+            <aside className={`${
+              showFilters
+                ? 'fixed inset-0 z-40 flex items-start justify-start bg-slate-900/50 lg:static lg:bg-transparent lg:inset-auto lg:z-auto'
+                : 'hidden lg:block'
+            } lg:w-72 flex-shrink-0`}>
+              <div className="sticky top-28 bg-white rounded-2xl border border-slate-100 p-6 shadow-card w-72 max-h-screen overflow-y-auto lg:w-auto lg:max-h-none">
                 <div className="flex items-center justify-between mb-6 lg:hidden">
                   <h3 className="font-heading font-semibold text-lg">Filters</h3>
                   <button onClick={() => setShowFilters(false)} className="p-2 hover:bg-slate-100 rounded-lg">

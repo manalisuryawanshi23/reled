@@ -69,7 +69,7 @@ export function AboutPage() {
             <Link to="/" className="hover:text-accent-400 transition-colors">Home</Link>
             <span className="text-accent-400"> / About Us</span>
           </div>
-          <h1 className="font-heading text-4xl md:text-5xl font-bold">About {settings?.company_name || 'LedPrisha'}</h1>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold">About {settings?.company_name || 'RELED'}</h1>
         </div>
       </section>
 
@@ -81,13 +81,13 @@ export function AboutPage() {
                 {settings?.about_image_url ? (
                   <img
                     src={settings.about_image_url}
-                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
+                    alt={`About ${settings?.company_name || 'RELED'}`}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <img
                     src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
+                    alt={`About ${settings?.company_name || 'RELED'}`}
                     className="w-full h-full object-cover"
                   />
                 )}

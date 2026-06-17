@@ -61,7 +61,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative h-[90vh] min-h-[700px] overflow-hidden bg-charcoal-950">
+    <section className="relative h-[75vh] sm:h-[85vh] min-h-[560px] md:min-h-[700px] overflow-hidden bg-charcoal-950">
       {/* Background Slides */}
       {slides.map((slide, index) => (
         <div
@@ -89,7 +89,7 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative h-full container-wide flex items-center">
-        <div className="max-w-2xl pt-20">
+        <div className="max-w-2xl pt-16 md:pt-20">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -100,19 +100,19 @@ export function HeroSection() {
               }`}
             >
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-5 md:mb-8">
                 <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
-                <span className="text-white/80 text-sm font-medium tracking-wide">Premium LED Solutions</span>
+                <span className="text-white/80 text-xs md:text-sm font-medium tracking-wide">Premium LED Solutions</span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 md:mb-6">
                 {slide.headline.split(' ').slice(0, -1).join(' ')}{' '}
                 <span className="text-gradient-gold">{slide.headline.split(' ').pop()}</span>
               </h1>
 
               {/* Subheadline */}
-              <p className="text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-7 md:mb-10 leading-relaxed max-w-xl">
                 {slide.subheadline}
               </p>
 

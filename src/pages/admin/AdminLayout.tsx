@@ -59,7 +59,7 @@ export function AdminLayout() {
               <div className="w-10 h-10 bg-gradient-to-br from-accent-500 to-accent-600 rounded-lg flex items-center justify-center">
                 <Zap className="w-6 h-6 text-white" />
               </div>
-              {sidebarOpen && <span className="font-heading font-bold text-lg">{settings?.company_name || 'LedPrisha'}</span>}
+              {sidebarOpen && <span className="font-heading font-bold text-lg">{settings?.company_name || 'RELED'}</span>}
             </Link>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}

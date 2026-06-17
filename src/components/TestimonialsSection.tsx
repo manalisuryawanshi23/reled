@@ -8,7 +8,7 @@ const defaultTestimonials: Testimonial[] = [
     id: '1',
     customer_name: 'Rajesh Kumar',
     company_name: 'Modern Industries Pvt Ltd',
-    testimonial_text: 'LedPrisha transformed our factory with their industrial lighting solutions. Energy savings exceeded our expectations.',
+    testimonial_text: 'RELED transformed our factory with their industrial lighting solutions. Energy savings exceeded our expectations.',
     star_rating: 5,
     is_active: true,
     sort_order: 0,

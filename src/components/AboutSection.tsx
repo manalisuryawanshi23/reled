@@ -56,13 +56,13 @@ export function AboutSection() {
                 {settings?.about_image_url ? (
                   <img
                     src={settings.about_image_url}
-                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
+                    alt={`About ${settings?.company_name || 'RELED'}`}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <img
                     src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt={`About ${settings?.company_name || 'LedPrisha'}`}
+                    alt={`About ${settings?.company_name || 'RELED'}`}
                     className="w-full h-full object-cover"
                   />
                 )}
