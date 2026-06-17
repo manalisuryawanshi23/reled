@@ -3,6 +3,7 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import { pool } from './db';
 
 const app = express();
@@ -14,6 +15,33 @@ const ADMIN_USER_ID = '00000000-0000-0000-0000-000000000000'; // Static UUID for
 
 app.use(cors());
 app.use(express.json());
+
+// =================================================================
+// FILE UPLOAD SETUP (multer)
+// =================================================================
+const UPLOADS_DIR = path.join(__dirname, '../../public/uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, UPLOADS_DIR),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const name = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+    cb(null, name);
+  },
+});
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB max
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('Only image files are allowed'));
+  },
+});
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // =================================================================
 // DATABASE BOOTSTRAP: Load schema if settings table doesn't exist
@@ -149,6 +177,18 @@ app.get('/api/auth/session', (req: Request, res: Response) => {
 // =================================================================
 // CORE API CRUD ENDPOINTS
 // =================================================================
+
+// =================================================================
+// FILE UPLOAD ENDPOINT
+// =================================================================
+app.post('/api/upload', authenticateToken, upload.single('file'), (req: Request, res: Response) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  const host = req.protocol + '://' + req.get('host');
+  const url = `${host}/uploads/${req.file.filename}`;
+  return res.json({ url, filename: req.file.filename });
+});
 
 // GET: Query table items
 app.get('/api/:table', async (req: Request, res: Response) => {
@@ -366,8 +406,43 @@ app.delete('/api/:table', async (req: Request, res: Response) => {
   }
 });
 
+// =================================================================
+// SITEMAP.XML ENDPOINT
+// =================================================================
+app.get('/sitemap.xml', async (_req: Request, res: Response) => {
+  const baseUrl = 'https://reled.in'; // Change to your domain when live
+  try {
+    const [catRes, subRes, prodRes] = await Promise.all([
+      pool.query(`SELECT slug FROM categories WHERE is_active = true`),
+      pool.query(`SELECT c.slug as cat_slug, s.slug as sub_slug FROM subcategories s JOIN categories c ON s.category_id = c.id WHERE s.is_active = true AND s.parent_id IS NULL`),
+      pool.query(`SELECT p.slug, c.slug as cat_slug FROM products p JOIN categories c ON p.category_id = c.id WHERE p.status = 'active'`),
+    ]);
+
+    const staticRoutes = ['/', '/about', '/contact', '/gallery', '/sectors', '/products'];
+    const catRoutes = catRes.rows.map((r: any) => `/products/category/${r.slug}`);
+    const subRoutes = subRes.rows.map((r: any) => `/products/category/${r.cat_slug}/${r.sub_slug}`);
+
+    const allUrls = [...staticRoutes, ...catRoutes, ...subRoutes];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allUrls.map(u => `  <url>
+    <loc>${baseUrl}${u}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>${u === '/' ? '1.0' : u.startsWith('/products/category/') ? '0.8' : '0.6'}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+    res.header('Content-Type', 'application/xml');
+    return res.send(xml);
+  } catch (error: any) {
+    console.error('Sitemap generation error:', error.message);
+    return res.status(500).send('Error generating sitemap');
+  }
+});
+
 // Start server and initialize database
 app.listen(PORT, async () => {
-  console.log(`LedPrisha Ops Express Server is running on port ${PORT}`);
+  console.log(`RELED Express Server is running on port ${PORT}`);
   await bootstrapDatabase();
 });

@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Plus, Pencil, Trash2, Search, ArrowLeft, X, Upload, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import type { Product, Category, Subcategory } from '../../lib/types';
+import { ImageUploadField } from '../../components/ImageUploadField';
 
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -429,37 +430,63 @@ export function AdminProductForm() {
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Images</h2>
               <div className="space-y-4">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Image URL"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    className="input-field flex-1"
-                  />
-                  <button type="button" onClick={addImage} className="btn-secondary flex items-center gap-2">
-                    <Upload className="w-4 h-4" />
-                    Add
-                  </button>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {formData.images.map((img, index) => (
-                    <div key={index} className="relative group aspect-square bg-dark-100 rounded-lg overflow-hidden">
-                      <img src={img} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setCoverImage(img)}
-                          className={`px-2 py-1 text-xs rounded ${formData.cover_image_url === img ? 'bg-accent-500 text-white' : 'bg-white text-dark-900'}`}
-                        >
-                          {formData.cover_image_url === img ? 'Cover' : 'Set Cover'}
-                        </button>
-                        <button type="button" onClick={() => removeImage(index)} className="p-1 bg-red-500 text-white rounded">
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
+                {/* Cover image quick upload */}
+                <ImageUploadField
+                  label="Cover Image"
+                  value={formData.cover_image_url}
+                  onChange={(url) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      cover_image_url: url,
+                      images: url && !prev.images.includes(url) ? [...prev.images, url] : prev.images,
+                    }));
+                  }}
+                />
+
+                {/* Additional images */}
+                {formData.images.filter(img => img !== formData.cover_image_url).length > 0 && (
+                  <div>
+                    <p className="input-label mb-2">Additional Images</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {formData.images.map((img, index) => (
+                        img !== formData.cover_image_url && (
+                          <div key={index} className="relative group aspect-square bg-dark-100 rounded-lg overflow-hidden">
+                            <img src={img} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setCoverImage(img)}
+                                className="px-2 py-1 text-xs rounded bg-white text-dark-900 font-medium"
+                              >
+                                Set Cover
+                              </button>
+                              <button type="button" onClick={() => removeImage(index)} className="p-1 bg-red-500 text-white rounded">
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      ))}
                     </div>
-                  ))}
+                  </div>
+                )}
+
+                {/* Add extra image via URL */}
+                <div>
+                  <p className="input-label mb-2">Add More Images (URL)</p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Additional image URL"
+                      value={imageUrl}
+                      onChange={(e) => setImageUrl(e.target.value)}
+                      className="input-field flex-1 text-sm"
+                    />
+                    <button type="button" onClick={addImage} className="btn-secondary flex items-center gap-2 text-sm">
+                      <Upload className="w-4 h-4" />
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

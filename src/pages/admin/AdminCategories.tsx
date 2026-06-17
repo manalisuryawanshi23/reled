@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import type { Category, Subcategory } from '../../lib/types';
+import { ImageUploadField } from '../../components/ImageUploadField';
 
 export function AdminCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -167,10 +168,11 @@ export function AdminCategories() {
                 <label className="input-label">Description</label>
                 <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="input-field resize-none" rows={3} />
               </div>
-              <div>
-                <label className="input-label">Image URL</label>
-                <input type="text" value={formData.image_url} onChange={e => setFormData({...formData, image_url: e.target.value})} className="input-field" placeholder="https://..." />
-              </div>
+              <ImageUploadField
+                label="Category Image"
+                value={formData.image_url}
+                onChange={(url) => setFormData({...formData, image_url: url})}
+              />
               <div>
                 <label className="input-label">Sort Order</label>
                 <input type="number" value={formData.sort_order} onChange={e => setFormData({...formData, sort_order: parseInt(e.target.value) || 0})} className="input-field" />
@@ -365,10 +367,11 @@ export function AdminSubcategories() {
                 <label className="input-label">Description (Optional)</label>
                 <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="input-field resize-none" rows={2} />
               </div>
-              <div>
-                <label className="input-label">Image URL (Optional)</label>
-                <input type="text" value={formData.image_url} onChange={e => setFormData({...formData, image_url: e.target.value})} className="input-field" placeholder="https://..." />
-              </div>
+              <ImageUploadField
+                label="Subcategory Image (Optional)"
+                value={formData.image_url}
+                onChange={(url) => setFormData({...formData, image_url: url})}
+              />
               <div>
                 <label className="input-label">Sort Order</label>
                 <input type="number" value={formData.sort_order} onChange={e => setFormData({...formData, sort_order: parseInt(e.target.value) || 0})} className="input-field" />

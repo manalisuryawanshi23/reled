@@ -42,6 +42,34 @@ export function Navbar() {
   const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const location = useLocation();
   const { settings } = useSettings();
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+
+  // Capture PWA install prompt
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler as EventListener);
+    return () => window.removeEventListener('beforeinstallprompt', handler as EventListener);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!installPrompt) {
+      alert(
+        "To install this app on your device:\n\n" +
+        "• iOS Safari: Tap the 'Share' icon at the bottom, then 'Add to Home Screen'\n" +
+        "• Android/Chrome: Tap the 3-dot menu, then 'Install App' or 'Add to Home Screen'\n\n" +
+        "(Note: The native prompt requires HTTPS in production)"
+      );
+      setIsOpen(false);
+      return;
+    }
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    if (outcome === 'accepted') setInstallPrompt(null);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -180,7 +208,7 @@ export function Navbar() {
               <div className="relative w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/50 group-hover:scale-105 transition-all duration-300">
                 <Zap className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
-              <div className="hidden sm:block">
+              <div className="block">
                 <span className="font-bold text-lg md:text-xl text-slate-900 tracking-tight block leading-tight">
                   {settings.company_name}
                 </span>
@@ -236,14 +264,25 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 -mr-2 text-slate-700 hover:text-amber-600 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Mobile: Phone icon + Hamburger */}
+            <div className="lg:hidden flex items-center gap-1">
+              {settings.phone_1 && (
+                <a
+                  href={`tel:${settings.phone_1}`}
+                  className="p-2 text-amber-600 hover:text-amber-700 transition-colors"
+                  aria-label={`Call ${settings.phone_1}`}
+                >
+                  <Phone className="w-5 h-5" />
+                </a>
+              )}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 -mr-2 text-slate-700 hover:text-amber-600 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </nav>
         </div>
       </header>
@@ -548,7 +587,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile Contact CTA */}
-          <div className="sticky bottom-0 bg-white border-t border-slate-100 p-4 mt-4">
+          <div className="sticky bottom-0 bg-white border-t border-slate-100 p-4 mt-4 space-y-2">
             <Link
               to="/contact"
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg"
@@ -557,10 +596,22 @@ export function Navbar() {
               Get a Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
+
+            {/* PWA Install App Button */}
+            <button
+              onClick={handleInstallApp}
+              className="flex items-center justify-center gap-2 w-full py-3 bg-charcoal-900 hover:bg-charcoal-950 text-white font-semibold rounded-xl transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Install App
+            </button>
+
             {settings.phone_1 && (
               <a
                 href={`tel:${settings.phone_1}`}
-                className="flex items-center justify-center gap-2 w-full py-3 mt-2 text-amber-600 font-semibold"
+                className="flex items-center justify-center gap-2 w-full py-3 text-amber-600 font-semibold"
               >
                 <Phone className="w-4 h-4" />
                 {settings.phone_1}
