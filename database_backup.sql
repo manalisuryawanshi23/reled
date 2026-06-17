@@ -177,76 +177,76 @@ ON CONFLICT (id) DO NOTHING;
 
 -- Categories Data
 INSERT INTO categories (id, name, slug, description, image_url, sort_order, is_active) VALUES
-('6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Indoor Lights', 'indoor-lights', 'Premium LED solutions for homes, offices, and commercial interiors', 'https://images.pexels.com/photos/1112580/pexels-photo-1112580.jpeg?auto=compress&cs=tinysrgb&w=800', 1, true),
-('4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lights', 'magnetic-lights', 'Modern magnetic track lighting systems for flexible illumination', 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800', 2, true),
-('b0da26f0-868f-4e0f-839b-f60587d689fb', 'Profile Lights', 'profile-lights', 'LED aluminum profile lights for architectural applications', 'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=800', 3, true),
-('8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Outdoor Lights', 'outdoor-lights', 'Weather-resistant lighting for landscapes, streets, and facades', 'https://images.pexels.com/photos/257740/pexels-photo-257740.jpeg?auto=compress&cs=tinysrgb&w=800', 4, true),
-('78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Industrial', 'industrial', 'High-performance lighting for factories, warehouses, and manufacturing', 'https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg?auto=compress&cs=tinysrgb&w=800', 5, true),
-('ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Facade Lights', 'facade-lights', 'Architectural facade and wall washer lighting solutions', 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800', 6, true),
-('26317183-57e3-443f-bde1-3d3b453a3fb6', 'Under Water Light', 'under-water-light', 'Waterproof lighting solutions for pools, fountains, and water features', 'https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800', 7, true),
-('d67dbe2c-085d-41a4-9ea3-2f153765ef37', 'EV Chargers', 'ev-chargers', 'Electric vehicle charging solutions', 'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=800', 8, true)
+('6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Indoor Lights', 'indoor-lights', 'Premium LED solutions for homes, offices, and commercial interiors', 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80', 1, true),
+('4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lights', 'magnetic-lights', 'Modern magnetic track lighting systems for flexible illumination', 'https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&w=800&q=80', 2, true),
+('b0da26f0-868f-4e0f-839b-f60587d689fb', 'Profile Lights', 'profile-lights', 'LED aluminum profile lights for architectural applications', 'https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?auto=format&fit=crop&w=800&q=80', 3, true),
+('8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Outdoor Lights', 'outdoor-lights', 'Weather-resistant lighting for landscapes, streets, and facades', 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=800&q=80', 4, true),
+('78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Industrial', 'industrial', 'High-performance lighting for factories, warehouses, and manufacturing', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80', 5, true),
+('ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Facade Lights', 'facade-lights', 'Architectural facade and wall washer lighting solutions', 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80', 6, true),
+('26317183-57e3-443f-bde1-3d3b453a3fb6', 'Under Water Light', 'under-water-light', 'Waterproof lighting solutions for pools, fountains, and water features', 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80', 7, true),
+('d67dbe2c-085d-41a4-9ea3-2f153765ef37', 'EV Chargers', 'ev-chargers', 'Electric vehicle charging solutions', 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80', 8, true)
 ON CONFLICT (id) DO NOTHING;
 
 -- Subcategories Data
 INSERT INTO subcategories (id, category_id, name, slug, sort_order, is_active, parent_id, image_url) VALUES
 -- Indoor Lights subcategories
-('bc98254d-eaee-4229-90ad-d50264e74393', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Spark Series', 'spark-series', 1, true, NULL, 'https://images.pexels.com/photos/1005058/pexels-photo-1005058.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('132d8aa3-68ee-4833-9845-82c98d28fde8', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Surface Light', 'surface-light', 2, true, NULL, 'https://images.pexels.com/photos/1014774/pexels-photo-1014774.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('20201746-fabb-4cec-a5b9-9a376a3c8310', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Altima Series', 'altima-series', 3, true, NULL, 'https://images.pexels.com/photos/1125136/pexels-photo-1125136.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('b168b0a5-87da-4533-9133-c900384dab41', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'COB', 'cob', 4, true, NULL, 'https://images.pexels.com/photos/1031506/pexels-photo-1031506.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('54bc3115-a1c1-4168-98b5-2c6c2f523c4f', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Sonic Series', 'sonic-series', 5, true, NULL, 'https://images.pexels.com/photos/1009628/pexels-photo-1009628.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('9a6e679f-801c-4f36-8aee-7d82c5ab041b', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Downlight Series', 'downlight-series', 6, true, NULL, 'https://images.pexels.com/photos/1112580/pexels-photo-1112580.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('1edf0ab5-0888-42b2-933d-df15620d97d9', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Slim', 'slim', 7, true, NULL, 'https://images.pexels.com/photos/1005058/pexels-photo-1005058.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('3738c3c6-e390-4eff-93aa-e4f7bd57625c', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Track Light', 'track-light', 8, true, NULL, 'https://images.pexels.com/photos/1159102/pexels-photo-1159102.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('12b09ba9-e0a3-42f0-af5c-b37d1da30d41', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Tube Light', 'tube-light', 9, true, NULL, 'https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('e29244ec-3c4f-4570-81a5-532a45a7dd80', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Zoom Light', 'zoom-light', 10, true, NULL, 'https://images.pexels.com/photos/356968/pexels-photo-356968.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('bc98254d-eaee-4229-90ad-d50264e74393', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Spark Series', 'spark-series', 1, true, NULL, 'https://images.unsplash.com/photo-1565538810844-1e119de867c2?auto=format&fit=crop&w=400&q=80'),
+('132d8aa3-68ee-4833-9845-82c98d28fde8', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Surface Light', 'surface-light', 2, true, NULL, 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=400&q=80'),
+('20201746-fabb-4cec-a5b9-9a376a3c8310', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Altima Series', 'altima-series', 3, true, NULL, 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80'),
+('b168b0a5-87da-4533-9133-c900384dab41', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'COB', 'cob', 4, true, NULL, 'https://images.unsplash.com/photo-1558211583-d26f610c1eb1?auto=format&fit=crop&w=400&q=80'),
+('54bc3115-a1c1-4168-98b5-2c6c2f523c4f', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Sonic Series', 'sonic-series', 5, true, NULL, 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=400&q=80'),
+('9a6e679f-801c-4f36-8aee-7d82c5ab041b', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Downlight Series', 'downlight-series', 6, true, NULL, 'https://images.unsplash.com/photo-1565538810844-1e119de867c2?auto=format&fit=crop&w=400&q=80'),
+('1edf0ab5-0888-42b2-933d-df15620d97d9', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Slim', 'slim', 7, true, NULL, 'https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?auto=format&fit=crop&w=400&q=80'),
+('3738c3c6-e390-4eff-93aa-e4f7bd57625c', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Track Light', 'track-light', 8, true, NULL, 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=400&q=80'),
+('12b09ba9-e0a3-42f0-af5c-b37d1da30d41', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Tube Light', 'tube-light', 9, true, NULL, 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=400&q=80'),
+('e29244ec-3c4f-4570-81a5-532a45a7dd80', '6cf1d935-a59b-4c1c-a4e9-e260356213b5', 'Zoom Light', 'zoom-light', 10, true, NULL, 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80'),
 
 -- Magnetic Lights subcategories (top level)
-('5b8f6279-91f5-481c-9203-331b02b1c39f', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lighting 10mm Sleek', 'magnetic-lighting-10mm-sleek', 1, true, NULL, 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('6f0dbcf0-19b8-47d4-806d-df2fc9e10042', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lighting 20mm', 'magnetic-lighting-20mm', 2, true, NULL, 'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('5b8f6279-91f5-481c-9203-331b02b1c39f', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lighting 10mm Sleek', 'magnetic-lighting-10mm-sleek', 1, true, NULL, 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80'),
+('6f0dbcf0-19b8-47d4-806d-df2fc9e10042', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Lighting 20mm', 'magnetic-lighting-20mm', 2, true, NULL, 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80'),
 
 -- Magnetic Lights 20mm nested subcategories
-('14cc4ba9-e165-4b9a-a44a-11154ba5df2e', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Linear', 'magnetic-linear', 1, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1159102/pexels-photo-1159102.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('80d696fa-8f0f-4d20-96fa-d9b3ae82668c', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Profile', 'magnetic-profile', 2, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1112580/pexels-photo-1112580.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('feb206a8-5c7d-4f6f-8ff6-af9080ae71f2', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Foldable Linear', 'magnetic-foldable-linear', 3, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1005058/pexels-photo-1005058.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('43155ba7-ec57-4811-a657-8d2194c95822', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Foldable Profile', 'magnetic-foldable-profile', 4, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('5f9f1726-9b2c-440d-9e37-a563813454c3', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Tiltable Linear Profile', 'magnetic-tiltable-linear-profile', 5, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1031506/pexels-photo-1031506.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('14acd677-acbb-4c7a-b450-962a11469a5a', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Track Series', 'magnetic-track-series', 6, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/1159102/pexels-photo-1159102.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('8b129a83-29a2-4d8b-98f8-963c417342d2', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Spot', 'magnetic-spot', 7, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/356968/pexels-photo-356968.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('71b02fe8-b248-4e15-a77b-426e6b525679', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Pendent', 'magnetic-pendent', 8, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.pexels.com/photos/109347/pexels-photo-109347.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('14cc4ba9-e165-4b9a-a44a-11154ba5df2e', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Linear', 'magnetic-linear', 1, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=80'),
+('80d696fa-8f0f-4d20-96fa-d9b3ae82668c', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Profile', 'magnetic-profile', 2, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80'),
+('feb206a8-5c7d-4f6f-8ff6-af9080ae71f2', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Foldable Linear', 'magnetic-foldable-linear', 3, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=400&q=80'),
+('43155ba7-ec57-4811-a657-8d2194c95822', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Foldable Profile', 'magnetic-foldable-profile', 4, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80'),
+('5f9f1726-9b2c-440d-9e37-a563813454c3', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Tiltable Linear Profile', 'magnetic-tiltable-linear-profile', 5, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1558211583-d26f610c1eb1?auto=format&fit=crop&w=400&q=80'),
+('14acd677-acbb-4c7a-b450-962a11469a5a', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Track Series', 'magnetic-track-series', 6, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80'),
+('8b129a83-29a2-4d8b-98f8-963c417342d2', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Spot', 'magnetic-spot', 7, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80'),
+('71b02fe8-b248-4e15-a77b-426e6b525679', '4a2af03e-9a16-49f4-a1de-db34c2db4c7c', 'Magnetic Pendent', 'magnetic-pendent', 8, true, '6f0dbcf0-19b8-47d4-806d-df2fc9e10042', 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80'),
 
 -- Profile Lights subcategories
-('b54029f7-4f25-4502-ac9a-22f1b817f746', 'b0da26f0-868f-4e0f-839b-f60587d689fb', 'LED Aluminum Profile', 'led-aluminum-profile', 1, true, NULL, 'https://images.pexels.com/photos/1112580/pexels-photo-1112580.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('9755602a-8acc-466a-9277-4d4f92108f40', 'b0da26f0-868f-4e0f-839b-f60587d689fb', 'Geometrical Shapes Profile', 'geometrical-shapes-profile', 2, true, NULL, 'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('b54029f7-4f25-4502-ac9a-22f1b817f746', 'b0da26f0-868f-4e0f-839b-f60587d689fb', 'LED Aluminum Profile', 'led-aluminum-profile', 1, true, NULL, 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80'),
+('9755602a-8acc-466a-9277-4d4f92108f40', 'b0da26f0-868f-4e0f-839b-f60587d689fb', 'Geometrical Shapes Profile', 'geometrical-shapes-profile', 2, true, NULL, 'https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?auto=format&fit=crop&w=400&q=80'),
 
 -- Outdoor Lights subcategories
-('269cce47-164d-40be-9139-0a4b893945b8', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Flood Light Series', 'flood-light-series', 1, true, NULL, 'https://images.pexels.com/photos/257740/pexels-photo-257740.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('2cfa472f-212f-4582-a867-badf4f38971f', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Street Lights', 'outdoor-street-lights', 2, true, NULL, 'https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=compress&cs=tinyrgb&w=400'),
-('5587a48e-d8ed-4c63-94b0-a45912009221', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Garden Light', 'outdoor-garden-light', 3, true, NULL, 'https://images.pexels.com/photos/109347/pexels-photo-109347.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('269cce47-164d-40be-9139-0a4b893945b8', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Flood Light Series', 'flood-light-series', 1, true, NULL, 'https://images.unsplash.com/photo-1558486012-817176f84c6d?auto=format&fit=crop&w=400&q=80'),
+('2cfa472f-212f-4582-a867-badf4f38971f', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Street Lights', 'outdoor-street-lights', 2, true, NULL, 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=400&q=80'),
+('5587a48e-d8ed-4c63-94b0-a45912009221', '8eb720a2-8bf3-4697-9882-18edf97ce41b', 'Garden Light', 'outdoor-garden-light', 3, true, NULL, 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=400&q=80'),
 
 -- Industrial subcategories
-('46714d70-0a09-4c50-a6c3-bd8471e33161', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'UFO Highbay Series', 'ufo-highbay-series', 1, true, NULL, 'https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('b9624157-b794-4aa8-8e68-cacdaea7fa96', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Modular Highbay', 'modular-highbay', 2, true, NULL, 'https://images.pexels.com/photos/2431258/pexels-photo-2431258.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('de993ed0-6a2b-4f25-83da-3262bccce147', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Ignito Highbay Series', 'ignito-highbay-series', 3, true, NULL, 'https://images.pexels.com/photos/1290424/pexels-photo-1290424.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('46714d70-0a09-4c50-a6c3-bd8471e33161', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'UFO Highbay Series', 'ufo-highbay-series', 1, true, NULL, 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80'),
+('b9624157-b794-4aa8-8e68-cacdaea7fa96', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Modular Highbay', 'modular-highbay', 2, true, NULL, 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=80'),
+('de993ed0-6a2b-4f25-83da-3262bccce147', '78dec9b1-8355-44f1-8c61-d9d9fa5a4426', 'Ignito Highbay Series', 'ignito-highbay-series', 3, true, NULL, 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=400&q=80'),
 
 -- Facade Lights subcategories
-('f9f4bf18-7a73-42d8-b7e8-1d676199a8e2', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Flood Lights RGBW / Mono', 'flood-lights-rgbw-mono', 1, true, NULL, 'https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('7d224054-fa05-4f44-ace4-55fbdb8e2209', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Linear Wall Washer', 'linear-wall-washer', 2, true, NULL, 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('2f095285-ce97-4bd0-95e0-d62626aac17b', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Fountain Light', 'fountain-light', 3, true, NULL, 'https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('21918488-d09b-4598-b6e7-8702bbc4300e', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Under Water Light', 'facade-under-water-light', 4, true, NULL, 'https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('276a4f56-213b-4ac0-91ae-e0b91829b9aa', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Linear Inground Light', 'linear-inground-light', 5, true, NULL, 'https://images.pexels.com/photos/219792/pexels-photo-219792.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('50345470-fdcc-4936-b636-77e908229edb', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Round Inground Light', 'round-inground-light', 6, true, NULL, 'https://images.pexels.com/photos/109347/pexels-photo-109347.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('f9f4bf18-7a73-42d8-b7e8-1d676199a8e2', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Flood Lights RGBW / Mono', 'flood-lights-rgbw-mono', 1, true, NULL, 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80'),
+('7d224054-fa05-4f44-ace4-55fbdb8e2209', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Linear Wall Washer', 'linear-wall-washer', 2, true, NULL, 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80'),
+('2f095285-ce97-4bd0-95e0-d62626aac17b', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Fountain Light', 'fountain-light', 3, true, NULL, 'https://images.unsplash.com/photo-1554123158-8884f177c4b3?auto=format&fit=crop&w=400&q=80'),
+('21918488-d09b-4598-b6e7-8702bbc4300e', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Under Water Light', 'facade-under-water-light', 4, true, NULL, 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80'),
+('276a4f56-213b-4ac0-91ae-e0b91829b9aa', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Linear Inground Light', 'linear-inground-light', 5, true, NULL, 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80'),
+('50345470-fdcc-4936-b636-77e908229edb', 'ca5732f6-13e0-4c2b-a61e-6ee9c81dfc64', 'Round Inground Light', 'round-inground-light', 6, true, NULL, 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=400&q=80'),
 
 -- Under Water Light subcategories
-('f2791bb6-19af-4c0e-b0d5-63fb115802ba', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Nozzle Light', 'nozzle-light', 1, true, NULL, 'https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('0e8bb800-3240-44c8-9878-91e01a8ab41b', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Garden Light', 'underwater-garden-light', 2, true, NULL, 'https://images.pexels.com/photos/109347/pexels-photo-109347.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('bcb60d4e-d779-4fc3-ba67-5536130815f2', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Fiber Optic Light', 'fiber-optic-light', 3, true, NULL, 'https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('e1638bfd-1e36-4b2e-85fd-fd09f24d1b21', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Wall Washer Light', 'wall-washer-light', 4, true, NULL, 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('5f71403d-d7d4-4bfb-b393-531f6f4308e2', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'DMX Flood Light', 'dmx-flood-light', 5, true, NULL, 'https://images.pexels.com/photos/257740/pexels-photo-257740.jpeg?auto=compress&cs=tinysrgb&w=400'),
-('0c80eb8a-4c23-4a14-944c-aa8f5c70d0f6', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Inground Light', 'inground-light', 6, true, NULL, 'https://images.pexels.com/photos/219792/pexels-photo-219792.jpeg?auto=compress&cs=tinysrgb&w=400'),
+('f2791bb6-19af-4c0e-b0d5-63fb115802ba', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Nozzle Light', 'nozzle-light', 1, true, NULL, 'https://images.unsplash.com/photo-1554123158-8884f177c4b3?auto=format&fit=crop&w=400&q=80'),
+('0e8bb800-3240-44c8-9878-91e01a8ab41b', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Garden Light', 'underwater-garden-light', 2, true, NULL, 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=400&q=80'),
+('bcb60d4e-d779-4fc3-ba67-5536130815f2', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Fiber Optic Light', 'fiber-optic-light', 3, true, NULL, 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=400&q=80'),
+('e1638bfd-1e36-4b2e-85fd-fd09f24d1b21', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Wall Washer Light', 'wall-washer-light', 4, true, NULL, 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80'),
+('5f71403d-d7d4-4bfb-b393-531f6f4308e2', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'DMX Flood Light', 'dmx-flood-light', 5, true, NULL, 'https://images.unsplash.com/photo-1558486012-817176f84c6d?auto=format&fit=crop&w=400&q=80'),
+('0c80eb8a-4c23-4a14-944c-aa8f5c70d0f6', '26317183-57e3-443f-bde1-3d3b453a3fb6', 'Inground Light', 'inground-light', 6, true, NULL, 'https://images.unsplash.com/photo-1563298723-dcfebaa3a2ec?auto=format&fit=crop&w=400&q=80'),
 
 -- EV Chargers subcategories
-('8e6b12f4-b46d-4e84-ade9-b0876adbbc1c', 'd67dbe2c-085d-41a4-9ea3-2f153765ef37', 'EV Chargers', 'ev-chargers-sub', 1, true, NULL, 'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=400')
+('8e6b12f4-b46d-4e84-ade9-b0876adbbc1c', 'd67dbe2c-085d-41a4-9ea3-2f153765ef37', 'EV Chargers', 'ev-chargers-sub', 1, true, NULL, 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80')
 ON CONFLICT (id) DO NOTHING;
 
 -- Products Data

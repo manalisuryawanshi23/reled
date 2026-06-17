@@ -86,6 +86,9 @@ export function Navbar() {
             }))
         }));
         setCategories(categoriesWithSubs);
+        if (categoriesWithSubs.length > 0) {
+          setHoveredCategory(categoriesWithSubs[0].id);
+        }
       }
     };
     fetchCategories();
@@ -101,10 +104,15 @@ export function Navbar() {
   const handleMenuEnter = () => {
     if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
     setShowProductsMenu(true);
+    if (categories.length > 0 && !hoveredCategory) {
+      setHoveredCategory(categories[0].id);
+    }
   };
 
   const handleMenuLeave = () => {
-    menuTimeoutRef.current = setTimeout(() => setShowProductsMenu(false), 200);
+    menuTimeoutRef.current = setTimeout(() => {
+      setShowProductsMenu(false);
+    }, 200);
   };
 
   const navLinks = [
@@ -269,11 +277,10 @@ export function Navbar() {
                         to={`/products/category/${cat.slug}`}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                           isHovered
-                            ? 'bg-white shadow-sm text-slate-900'
-                            : 'text-slate-600 hover:bg-white/50'
+                            ? 'bg-white shadow-sm text-slate-900 font-bold border-l-4 border-amber-500 pl-3'
+                            : 'text-slate-600 hover:bg-white/50 font-medium'
                         }`}
                         onMouseEnter={() => setHoveredCategory(cat.id)}
-                        onMouseLeave={() => setHoveredCategory(null)}
                       >
                         <div className={`w-8 h-8 rounded-lg ${colors.bg} flex items-center justify-center flex-shrink-0 transition-transform duration-200 ${isHovered ? 'scale-110' : ''}`}>
                           <Icon className="w-4 h-4 text-white" />
@@ -319,23 +326,23 @@ export function Navbar() {
 
                         {/* Subcategories Grid */}
                         {cat.subcategories.length > 0 ? (
-                          <div className="grid grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-4">
+                          <div className="grid grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-6">
                             {cat.subcategories.map((sub) => (
-                              <div key={sub.id} className="space-y-2">
+                              <div key={sub.id} className="space-y-3">
                                 <Link
                                   to={`/products/category/${cat.slug}/${sub.slug}`}
-                                  className="group flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-amber-600 transition-colors"
+                                  className="group flex items-center justify-between text-sm font-bold text-slate-800 hover:text-amber-600 transition-colors border-b border-slate-100 pb-1.5"
                                 >
-                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-amber-500 transition-colors" />
-                                  {sub.name}
+                                  <span>{sub.name}</span>
+                                  <ChevronRight className="w-3.5 h-3.5 text-slate-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                                 </Link>
                                 {sub.children && sub.children.length > 0 && (
-                                  <ul className="ml-3 space-y-1">
+                                  <ul className="space-y-1">
                                     {sub.children.map((child) => (
                                       <li key={child.id}>
                                         <Link
                                           to={`/products/category/${cat.slug}/${sub.slug}/${child.slug}`}
-                                          className="text-xs text-slate-500 hover:text-amber-600 transition-colors py-0.5 block"
+                                          className="text-xs text-slate-500 hover:text-amber-600 transition-colors py-1.5 px-2 hover:bg-slate-50 rounded block font-medium"
                                         >
                                           {child.name}
                                         </Link>
