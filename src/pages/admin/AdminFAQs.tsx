@@ -73,13 +73,13 @@ export function AdminFAQs() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="w-8 h-8 bg-accent-500/10 text-accent-500 rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>
+                    <span className="w-8 h-8 bg-primary-500/10 text-primary-500 rounded-full flex items-center justify-center text-sm font-bold">{index + 1}</span>
                     <h3 className="font-heading font-semibold text-dark-900">{faq.question}</h3>
                   </div>
                   <p className="text-dark-600 text-sm ml-11">{faq.answer}</p>
                 </div>
                 <div className="flex gap-1">
-                  <button onClick={() => openModal(faq)} className="p-2 text-dark-500 hover:text-accent-500"><Pencil className="w-4 h-4" /></button>
+                  <button onClick={() => openModal(faq)} className="p-2 text-dark-500 hover:text-primary-500"><Pencil className="w-4 h-4" /></button>
                   <button onClick={() => handleDelete(faq.id)} className="p-2 text-dark-500 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function AdminFAQs() {
                 <input type="number" value={formData.sort_order} onChange={e => setFormData({...formData, sort_order: parseInt(e.target.value) || 0})} className="input-field" />
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 accent-accent-500" />
+                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 primary-primary-500" />
                 <span className="text-dark-700">Active</span>
               </label>
               <button type="submit" className="btn-primary w-full">{editingItem ? 'Update' : 'Create'}</button>

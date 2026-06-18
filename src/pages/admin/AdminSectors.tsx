@@ -103,7 +103,7 @@ export function AdminSectors() {
                 <div className="flex justify-between items-center mt-3 pt-3 border-t border-dark-100">
                   <span className="text-dark-400 text-xs">Sort: {sector.sort_order}</span>
                   <div className="flex gap-1">
-                    <button onClick={() => openModal(sector)} className="p-2 text-dark-500 hover:text-accent-500"><Pencil className="w-4 h-4" /></button>
+                    <button onClick={() => openModal(sector)} className="p-2 text-dark-500 hover:text-primary-500"><Pencil className="w-4 h-4" /></button>
                     <button onClick={() => handleDelete(sector.id)} className="p-2 text-dark-500 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ export function AdminSectors() {
                 <input type="number" value={formData.sort_order} onChange={e => setFormData({...formData, sort_order: parseInt(e.target.value) || 0})} className="input-field" />
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 accent-accent-500" />
+                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 primary-primary-500" />
                 <span className="text-dark-700">Active</span>
               </label>
               <button type="submit" className="btn-primary w-full">{editingItem ? 'Update' : 'Create'}</button>

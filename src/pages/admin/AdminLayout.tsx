@@ -55,11 +55,16 @@ export function AdminLayout() {
       >
         <div className="h-full flex flex-col">
           <div className="h-16 flex items-center justify-between px-4 border-b border-dark-800">
-            <Link to="/admin/dashboard" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-accent-500 to-accent-600 rounded-lg flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
+            <Link to="/admin/dashboard" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 bg-[#E31837] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-white font-serif font-bold text-xl tracking-tight">Re</span>
               </div>
-              {sidebarOpen && <span className="font-heading font-bold text-lg">{settings?.company_name || 'RELED'}</span>}
+              {sidebarOpen && (
+                <div className="flex flex-col">
+                  <span className="font-black text-xl tracking-tighter uppercase leading-none">{settings?.company_name || 'LED'}</span>
+                  <span className="text-[9px] text-primary-400 font-bold uppercase tracking-wider mt-0.5">Admin</span>
+                </div>
+              )}
             </Link>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -83,7 +88,7 @@ export function AdminLayout() {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive
-                          ? 'bg-accent-500 text-white'
+                          ? 'bg-primary-500 text-white'
                           : 'text-dark-300 hover:bg-dark-800 hover:text-white'
                       }`}
                     >
@@ -132,7 +137,7 @@ export function AdminLayout() {
               <Link
                 to="/"
                 target="_blank"
-                className="text-sm text-dark-500 hover:text-accent-500 transition-colors"
+                className="text-sm text-dark-500 hover:text-primary-500 transition-colors"
               >
                 View Website
               </Link>

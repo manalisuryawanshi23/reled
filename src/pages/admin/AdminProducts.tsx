@@ -160,7 +160,7 @@ export function AdminProducts() {
                       <div className="flex items-center gap-2">
                         <Link
                           to={`/admin/products/edit/${product.id}`}
-                          className="p-2 text-dark-500 hover:text-accent-500 transition-colors"
+                          className="p-2 text-dark-500 hover:text-primary-500 transition-colors"
                         >
                           <Pencil className="w-4 h-4" />
                         </Link>
@@ -288,8 +288,9 @@ export function AdminProductForm() {
     e.preventDefault();
     setLoading(true);
 
+    const { category, subcategory, ...rest } = formData;
     const payload = {
-      ...formData,
+      ...rest,
       subcategory_id: formData.subcategory_id || null,
     };
 
@@ -315,7 +316,7 @@ export function AdminProductForm() {
   return (
     <div>
       <div className="mb-6">
-        <Link to="/admin/products" className="inline-flex items-center gap-2 text-dark-500 hover:text-accent-500 mb-4">
+        <Link to="/admin/products" className="inline-flex items-center gap-2 text-dark-500 hover:text-primary-500 mb-4">
           <ArrowLeft className="w-4 h-4" />
           Back to Products
         </Link>

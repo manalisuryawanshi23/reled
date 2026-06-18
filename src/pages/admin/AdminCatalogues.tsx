@@ -103,7 +103,7 @@ export function AdminCatalogues() {
                   <span className={`px-2 py-1 text-xs rounded-full ${cat.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                     {cat.is_active ? 'Active' : 'Inactive'}
                   </span>
-                  <a href={cat.pdf_url} target="_blank" rel="noopener noreferrer" className="text-accent-500 hover:text-accent-600 text-sm flex items-center gap-1">
+                  <a href={cat.pdf_url} target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:text-primary-600 text-sm flex items-center gap-1">
                     View PDF <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
@@ -148,7 +148,7 @@ export function AdminCatalogues() {
                 <input type="text" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="input-field" />
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 accent-accent-500" />
+                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 primary-primary-500" />
                 <span className="text-dark-700">Active</span>
               </label>
               <button type="submit" className="btn-primary w-full">{editingCatalogue ? 'Update' : 'Create'}</button>

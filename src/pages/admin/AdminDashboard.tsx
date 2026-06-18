@@ -150,7 +150,7 @@ export function AdminDashboard() {
             <h2 className="font-heading font-semibold text-lg text-dark-900">Recent Enquiries</h2>
             <Link
               to="/admin/enquiries"
-              className="text-accent-500 hover:text-accent-600 text-sm font-medium flex items-center gap-1"
+              className="text-primary-500 hover:text-primary-600 text-sm font-medium flex items-center gap-1"
             >
               View All
               <ArrowRight className="w-4 h-4" />
@@ -211,28 +211,28 @@ export function AdminDashboard() {
           <div className="p-6 space-y-4">
             <Link
               to="/admin/products/new"
-              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-accent-50 hover:text-accent-600 transition-colors"
+              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors"
             >
               <Package className="w-5 h-5" />
               <span className="font-medium">Add New Product</span>
             </Link>
             <Link
               to="/admin/categories"
-              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-accent-50 hover:text-accent-600 transition-colors"
+              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors"
             >
               <FolderTree className="w-5 h-5" />
               <span className="font-medium">Manage Categories</span>
             </Link>
             <Link
               to="/admin/gallery"
-              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-accent-50 hover:text-accent-600 transition-colors"
+              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors"
             >
               <Image className="w-5 h-5" />
               <span className="font-medium">Upload Gallery Images</span>
             </Link>
             <Link
               to="/admin/settings"
-              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-accent-50 hover:text-accent-600 transition-colors"
+              className="flex items-center gap-3 p-3 bg-dark-50 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors"
             >
               <TrendingUp className="w-5 h-5" />
               <span className="font-medium">Update Settings</span>

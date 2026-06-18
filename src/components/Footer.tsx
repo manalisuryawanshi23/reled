@@ -66,12 +66,23 @@ export function Footer() {
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" onClick={scrollTop} className="inline-flex items-center gap-3 mb-5 group">
-              <div className="w-11 h-11 bg-[#E31837] rounded-xl flex items-center justify-center shadow-primary flex-shrink-0 group-hover:scale-105 transition-all">
-                <span className="text-white font-serif font-bold text-2xl tracking-tight">Re</span>
-              </div>
-              <div>
-                <span className="font-black text-3xl text-white tracking-tighter block leading-none mt-1 uppercase">LED</span>
-                <span className="block text-[10px] text-slate-400 font-semibold tracking-wide capitalize mt-0.5">Roshni Jo Saath Rahe</span>
+              <img 
+                src="/logo.png" 
+                alt="Re LED" 
+                className="h-14 w-auto object-contain bg-white rounded-lg p-1"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden flex items-center gap-3">
+                <div className="w-11 h-11 bg-[#E31837] rounded-xl flex items-center justify-center shadow-primary flex-shrink-0 group-hover:scale-105 transition-all">
+                  <span className="text-white font-serif font-bold text-2xl tracking-tight">Re</span>
+                </div>
+                <div>
+                  <span className="font-black text-3xl text-white tracking-tighter block leading-none mt-1 uppercase">LED</span>
+                  <span className="block text-[10px] text-slate-400 font-semibold tracking-wide capitalize mt-0.5">Roshni Jo Saath Rahe</span>
+                </div>
               </div>
             </Link>
             <p className="text-slate-400 leading-relaxed mb-7 max-w-xs text-sm">

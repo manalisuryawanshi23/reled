@@ -155,7 +155,7 @@ export function AdminEnquiries() {
                       {new Date(enquiry.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
-                      <button className="p-2 text-dark-500 hover:text-accent-500">
+                      <button className="p-2 text-dark-500 hover:text-primary-500">
                         <Eye className="w-4 h-4" />
                       </button>
                     </td>
@@ -201,7 +201,7 @@ export function AdminEnquiries() {
                 </div>
                 <div>
                   <p className="text-dark-500 text-sm">Phone</p>
-                  <a href={`tel:${selectedEnquiry.phone}`} className="font-medium text-accent-500">{selectedEnquiry.phone}</a>
+                  <a href={`tel:${selectedEnquiry.phone}`} className="font-medium text-primary-500">{selectedEnquiry.phone}</a>
                 </div>
                 <div>
                   <p className="text-dark-500 text-sm">Email</p>

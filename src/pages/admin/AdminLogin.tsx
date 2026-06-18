@@ -64,8 +64,8 @@ export function AdminLogin() {
     <div className="min-h-screen bg-dark-950 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Zap className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-[#E31837] rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-500/20">
+            <span className="text-white font-serif font-bold text-3xl tracking-tight">Re</span>
           </div>
           <h1 className="font-heading text-3xl font-bold text-white mb-2">Admin Login</h1>
           <p className="text-dark-400">Sign in to access your dashboard</p>
@@ -176,7 +176,7 @@ export function AdminLogin() {
                       setIsSignUp(!isSignUp);
                       setError('');
                     }}
-                    className="text-accent-500 hover:text-accent-600 font-medium"
+                    className="text-primary-500 hover:text-primary-600 font-medium"
                   >
                     {isSignUp ? 'Sign In' : 'Create Account'}
                   </button>

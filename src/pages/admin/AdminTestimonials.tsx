@@ -101,13 +101,13 @@ export function AdminTestimonials() {
                   </div>
                   <div className="flex gap-0.5 mb-2">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < item.star_rating ? 'text-accent-500 fill-accent-500' : 'text-dark-300'}`} />
+                      <Star key={i} className={`w-4 h-4 ${i < item.star_rating ? 'text-primary-500 fill-primary-500' : 'text-dark-300'}`} />
                     ))}
                   </div>
                   <p className="text-dark-600 text-sm line-clamp-3">{item.testimonial_text}</p>
                 </div>
                 <div className="flex gap-1">
-                  <button onClick={() => openModal(item)} className="p-2 text-dark-500 hover:text-accent-500"><Pencil className="w-4 h-4" /></button>
+                  <button onClick={() => openModal(item)} className="p-2 text-dark-500 hover:text-primary-500"><Pencil className="w-4 h-4" /></button>
                   <button onClick={() => handleDelete(item.id)} className="p-2 text-dark-500 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export function AdminTestimonials() {
                 <div className="flex gap-1">
                   {[1,2,3,4,5].map(r => (
                     <button key={r} type="button" onClick={() => setFormData({...formData, star_rating: r})} className="p-1">
-                      <Star className={`w-6 h-6 ${r <= formData.star_rating ? 'text-accent-500 fill-accent-500' : 'text-dark-300'}`} />
+                      <Star className={`w-6 h-6 ${r <= formData.star_rating ? 'text-primary-500 fill-primary-500' : 'text-dark-300'}`} />
                     </button>
                   ))}
                 </div>
@@ -155,7 +155,7 @@ export function AdminTestimonials() {
                 <input type="number" value={formData.sort_order} onChange={e => setFormData({...formData, sort_order: parseInt(e.target.value) || 0})} className="input-field" />
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 accent-accent-500" />
+                <input type="checkbox" checked={formData.is_active} onChange={e => setFormData({...formData, is_active: e.target.checked})} className="w-4 h-4 primary-primary-500" />
                 <span className="text-dark-700">Active</span>
               </label>
               <button type="submit" className="btn-primary w-full">{editingItem ? 'Update' : 'Create'}</button>

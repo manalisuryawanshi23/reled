@@ -133,7 +133,7 @@ export function AdminCategories() {
                     <td className="px-6 py-4 text-dark-500">{cat.sort_order}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => openModal(cat)} className="p-2 text-dark-500 hover:text-accent-500">
+                        <button onClick={() => openModal(cat)} className="p-2 text-dark-500 hover:text-primary-500">
                           <Pencil className="w-4 h-4" />
                         </button>
                         <button onClick={() => handleDelete(cat.id)} className="p-2 text-dark-500 hover:text-red-500">
@@ -319,7 +319,7 @@ export function AdminSubcategories() {
                   <td className="px-6 py-4 text-dark-500">{sub.sort_order}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => openModal(sub)} className="p-2 text-dark-500 hover:text-accent-500"><Pencil className="w-4 h-4" /></button>
+                      <button onClick={() => openModal(sub)} className="p-2 text-dark-500 hover:text-primary-500"><Pencil className="w-4 h-4" /></button>
                       <button onClick={() => handleDelete(sub.id)} className="p-2 text-dark-500 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>

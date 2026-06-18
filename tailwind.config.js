@@ -18,20 +18,7 @@ export default {
           900: '#1c1c1c',
           950: '#0d0d0d',
         },
-        // Accent matches Gold
-        accent: {
-          50: '#fefdf8',
-          100: '#fdf9e8',
-          200: '#fbf1c8',
-          300: '#f8e598',
-          400: '#f3d362',
-          500: '#C6A052',
-          600: '#a8863f',
-          700: '#8a6a33',
-          800: '#6f542b',
-          900: '#5c4525',
-          950: '#332814',
-        },
+        // Dark Theme base
         // Dark matches Charcoal
         dark: {
           50: '#f7f7f7',

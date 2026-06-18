@@ -205,16 +205,28 @@ export function Navbar() {
           <nav className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 md:gap-3 group flex-shrink-0">
-              <div className="relative w-10 h-10 md:w-11 md:h-11 bg-[#E31837] rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30 group-hover:shadow-primary-500/50 group-hover:scale-105 transition-all duration-300">
-                <span className="text-white font-serif font-bold text-xl md:text-2xl tracking-tight">Re</span>
-              </div>
-              <div className="block">
-                <span className="font-black text-2xl md:text-3xl text-charcoal-800 tracking-tighter block leading-none mt-1 uppercase">
-                  LED
-                </span>
-                <span className="text-[9px] md:text-[10px] text-charcoal-600 font-semibold tracking-wide capitalize block leading-tight mt-0.5">
-                  Roshni Jo Saath Rahe
-                </span>
+              <img 
+                src="/logo.png" 
+                alt="Re LED" 
+                className="h-12 md:h-14 w-auto object-contain"
+                onError={(e) => {
+                  // Fallback to CSS logo if logo.png is missing
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden flex items-center gap-2.5">
+                <div className="relative w-10 h-10 md:w-11 md:h-11 bg-[#E31837] rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30">
+                  <span className="text-white font-serif font-bold text-xl md:text-2xl tracking-tight">Re</span>
+                </div>
+                <div className="block">
+                  <span className="font-black text-2xl md:text-3xl text-charcoal-800 tracking-tighter block leading-none mt-1 uppercase">
+                    LED
+                  </span>
+                  <span className="text-[9px] md:text-[10px] text-charcoal-600 font-semibold tracking-wide capitalize block leading-tight mt-0.5">
+                    Roshni Jo Saath Rahe
+                  </span>
+                </div>
               </div>
             </Link>
 
