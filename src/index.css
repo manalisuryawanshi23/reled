@@ -20,7 +20,7 @@
   }
 
   ::selection {
-    @apply bg-gold-500/20 text-charcoal-900;
+    @apply bg-primary-500/20 text-charcoal-900;
   }
 }
 
@@ -28,10 +28,10 @@
   /* Primary Button - Gold */
   .btn-primary {
     @apply relative inline-flex items-center justify-center gap-2 px-8 py-4
-           bg-gradient-gold text-charcoal-900 font-semibold text-sm tracking-wide uppercase
+           bg-gradient-primary text-charcoal-900 font-semibold text-sm tracking-wide uppercase
            rounded-xl overflow-hidden
            transition-all duration-300 ease-premium
-           shadow-gold hover:shadow-gold-lg
+           shadow-primary hover:shadow-primary-lg
            transform hover:-translate-y-0.5 active:translate-y-0;
   }
 
@@ -44,10 +44,10 @@
   /* Secondary Button - Outline */
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-8 py-4
-           border-2 border-gold-500 text-gold-600 font-semibold text-sm tracking-wide uppercase
+           border-2 border-primary-500 text-primary-600 font-semibold text-sm tracking-wide uppercase
            rounded-xl bg-transparent
            transition-all duration-300 ease-premium
-           hover:bg-gold-500 hover:text-charcoal-900;
+           hover:bg-primary-500 hover:text-charcoal-900;
   }
 
   /* Ghost Button */
@@ -63,13 +63,13 @@
   .card {
     @apply bg-white rounded-2xl border border-slate-100
            shadow-card transition-all duration-300 ease-premium
-           hover:shadow-card-hover hover:border-gold-200;
+           hover:shadow-card-hover hover:border-primary-200;
   }
 
   .card-dark {
     @apply bg-charcoal-900 rounded-2xl border border-charcoal-800
            shadow-premium-lg transition-all duration-300 ease-premium
-           hover:border-gold-500/30;
+           hover:border-primary-500/30;
   }
 
   /* Premium section */
@@ -95,8 +95,8 @@
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase;
   }
 
-  .badge-gold {
-    @apply badge bg-gold-100 text-gold-700 border border-gold-200;
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-700 border border-primary-200;
   }
 
   .badge-royal {
@@ -107,7 +107,7 @@
   .input-field {
     @apply w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl
            text-slate-800 placeholder:text-slate-400
-           focus:bg-white focus:border-gold-400 focus:ring-4 focus:ring-gold-100 focus:outline-none
+           focus:bg-white focus:border-primary-400 focus:ring-4 focus:ring-primary-100 focus:outline-none
            transition-all duration-200 ease-premium;
   }
 
@@ -125,7 +125,7 @@
   }
 
   /* Text Gradient */
-  .text-gradient-gold {
+  .text-gradient-primary {
     @apply bg-gradient-text bg-clip-text text-transparent;
   }
 
@@ -135,7 +135,7 @@
   }
 
   .divider-gold {
-    @apply h-px bg-gradient-to-r from-transparent via-gold-300 to-transparent;
+    @apply h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent;
   }
 
   /* Status Pills */
@@ -144,7 +144,7 @@
   }
 
   .status-progress {
-    @apply px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700;
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold bg-primary-100 text-primary-700;
   }
 
   .status-complete {

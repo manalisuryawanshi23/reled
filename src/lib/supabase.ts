@@ -64,9 +64,8 @@ class QueryBuilder {
   // Thenable implementation to support direct await calls: await supabase.from('table').select('*')
   async then(resolve: (value: any) => void) {
     try {
-      const baseUrl = import.meta.env.VITE_SUPABASE_URL || 'http://localhost:5000';
+      const baseUrl = ''; // Now handled by Vite proxy or relative in prod
       let url = `${baseUrl}/api/${this.tableName}`;
-
       const queryParams = new URLSearchParams();
       if (this.isSingle) {
         queryParams.append('single', 'true');
@@ -134,7 +133,7 @@ const authListeners = new Set<(event: string, session: any) => void>();
 const customAuth = {
   async signInWithPassword({ email, password }: any) {
     try {
-      const baseUrl = import.meta.env.VITE_SUPABASE_URL || 'http://localhost:5000';
+      const baseUrl = ''; // Relative path
       const res = await fetch(`${baseUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

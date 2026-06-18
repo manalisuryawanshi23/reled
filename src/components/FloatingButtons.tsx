@@ -44,7 +44,7 @@ export function FloatingButtons() {
             href={`tel:${settings.phone_1}`}
             onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
-            className="group relative w-14 h-14 bg-gradient-gold hover:shadow-gold-lg rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-110"
+            className="group relative w-14 h-14 bg-gradient-primary hover:shadow-primary-lg rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-110"
           >
             <Phone className="w-6 h-6 text-charcoal-900" />
             <span className="absolute right-full mr-4 px-3 py-2 bg-charcoal-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all pointer-events-none">

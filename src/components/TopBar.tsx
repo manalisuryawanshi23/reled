@@ -13,7 +13,7 @@ export function TopBar() {
             {settings.phone_1 && (
               <a
                 href={`tel:${settings.phone_1}`}
-                className="flex items-center gap-2 text-slate-400 hover:text-gold-400 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 text-slate-400 hover:text-primary-400 transition-colors text-sm font-medium"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>{settings.phone_1}</span>
@@ -22,7 +22,7 @@ export function TopBar() {
             {settings.email && (
               <a
                 href={`mailto:${settings.email}`}
-                className="flex items-center gap-2 text-slate-400 hover:text-gold-400 transition-colors text-sm font-medium"
+                className="flex items-center gap-2 text-slate-400 hover:text-primary-400 transition-colors text-sm font-medium"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>{settings.email}</span>

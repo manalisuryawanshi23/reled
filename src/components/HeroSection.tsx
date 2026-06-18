@@ -84,7 +84,7 @@ export function HeroSection() {
       ))}
 
       {/* Decorative Elements */}
-      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-gold-500/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-primary-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-royal-500/5 rounded-full blur-3xl" />
 
       {/* Content */}
@@ -101,14 +101,14 @@ export function HeroSection() {
             >
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-5 md:mb-8">
-                <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
+                <span className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
                 <span className="text-white/80 text-xs md:text-sm font-medium tracking-wide">Premium LED Solutions</span>
               </div>
 
               {/* Headline */}
               <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 md:mb-6">
                 {slide.headline.split(' ').slice(0, -1).join(' ')}{' '}
-                <span className="text-gradient-gold">{slide.headline.split(' ').pop()}</span>
+                <span className="text-gradient-primary">{slide.headline.split(' ').pop()}</span>
               </h1>
 
               {/* Subheadline */}
@@ -166,7 +166,7 @@ export function HeroSection() {
               onClick={() => setCurrentSlide(index)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 index === currentSlide
-                  ? 'w-8 bg-gold-500'
+                  ? 'w-8 bg-primary-500'
                   : 'w-1.5 bg-white/30 hover:bg-white/50'
               }`}
             />

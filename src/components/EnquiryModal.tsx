@@ -71,7 +71,7 @@ export function EnquiryModal({ productName, onClose }: EnquiryModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-gold rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
               <Send className="w-5 h-5 text-charcoal-900" />
             </div>
             <h2 className="font-heading text-xl font-bold text-charcoal-900">Send Enquiry</h2>

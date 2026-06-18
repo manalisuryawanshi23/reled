@@ -83,7 +83,7 @@ export function FAQSection() {
               key={faq.id}
               className={`bg-white rounded-2xl border transition-all duration-300 ${
                 openIndex === index
-                  ? 'border-gold-300 shadow-gold'
+                  ? 'border-primary-300 shadow-primary'
                   : 'border-slate-200 hover:border-slate-300'
               }`}
             >
@@ -94,7 +94,7 @@ export function FAQSection() {
                 <div className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
                     openIndex === index
-                      ? 'bg-gradient-gold text-charcoal-900'
+                      ? 'bg-gradient-primary text-charcoal-900'
                       : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
                   }`}>
                     <Zap className="w-5 h-5" />
@@ -107,7 +107,7 @@ export function FAQSection() {
                 </div>
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   openIndex === index
-                    ? 'bg-gold-100 text-gold-600 rotate-180'
+                    ? 'bg-primary-100 text-primary-600 rotate-180'
                     : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'
                 }`}>
                   <ChevronDown className="w-5 h-5" />

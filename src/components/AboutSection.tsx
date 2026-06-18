@@ -70,7 +70,7 @@ export function AboutSection() {
             </div>
 
             {/* Floating Badge */}
-            <div className="absolute -bottom-8 -right-8 z-20 bg-gradient-gold rounded-2xl shadow-gold-lg p-6 hidden lg:block">
+            <div className="absolute -bottom-8 -right-8 z-20 bg-gradient-primary rounded-2xl shadow-primary-lg p-6 hidden lg:block">
               <div className="text-charcoal-900">
                 <div className="font-heading text-4xl font-bold">{settings.years_experience || 10}+</div>
                 <div className="text-charcoal-700 font-medium">Years of Excellence</div>
@@ -79,13 +79,13 @@ export function AboutSection() {
 
             {/* Decorative Elements */}
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-slate-100 rounded-2xl -z-10" />
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gold-100 rounded-3xl -z-10" />
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-primary-100 rounded-3xl -z-10" />
 
             {/* Certification Badges */}
             <div className="absolute top-4 left-4 z-20 flex gap-2">
               {features.map((feature, index) => (
                 <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 shadow-premium flex items-center gap-2">
-                  <feature.icon className="w-4 h-4 text-gold-600" />
+                  <feature.icon className="w-4 h-4 text-primary-600" />
                   <span className="text-xs font-semibold text-charcoal-800">{feature.label}</span>
                 </div>
               ))}
@@ -95,14 +95,14 @@ export function AboutSection() {
           {/* Content Column */}
           <div>
             {/* Section Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold-100 rounded-full mb-6">
-              <Zap className="w-4 h-4 text-gold-600" />
-              <span className="text-gold-700 text-sm font-semibold tracking-wide uppercase">About Us</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 rounded-full mb-6">
+              <Zap className="w-4 h-4 text-primary-600" />
+              <span className="text-primary-700 text-sm font-semibold tracking-wide uppercase">About Us</span>
             </div>
 
             <h2 className="font-heading text-heading-1 text-charcoal-900 mb-6">
               Illuminating India with
-              <span className="text-gradient-gold block">Premium LED Solutions</span>
+              <span className="text-gradient-primary block">Premium LED Solutions</span>
             </h2>
 
             <p className="text-slate-600 text-body-lg leading-relaxed mb-8">

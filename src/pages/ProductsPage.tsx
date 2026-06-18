@@ -160,47 +160,47 @@ export function ProductsPage() {
       <section className="relative bg-charcoal-950 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container-wide relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm flex-wrap">
-            <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
+            <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
             {currentCategory ? (
               <>
-                <Link to="/products" className="hover:text-gold-400 transition-colors">Products</Link>
+                <Link to="/products" className="hover:text-primary-400 transition-colors">Products</Link>
                 <ChevronRight className="w-4 h-4" />
                 {currentSubcategory ? (
                   <>
-                    <Link to={`/products/category/${currentCategory.slug}`} className="hover:text-gold-400 transition-colors">
+                    <Link to={`/products/category/${currentCategory.slug}`} className="hover:text-primary-400 transition-colors">
                       {currentCategory.name}
                     </Link>
                     <ChevronRight className="w-4 h-4" />
                     {currentChildSubcategory ? (
                       <>
-                        <Link to={`/products/category/${currentCategory.slug}/${currentSubcategory.slug}`} className="hover:text-gold-400 transition-colors">
+                        <Link to={`/products/category/${currentCategory.slug}/${currentSubcategory.slug}`} className="hover:text-primary-400 transition-colors">
                           {currentSubcategory.name}
                         </Link>
                         <ChevronRight className="w-4 h-4" />
-                        <span className="text-gold-400">{currentChildSubcategory.name}</span>
+                        <span className="text-primary-400">{currentChildSubcategory.name}</span>
                       </>
                     ) : (
-                      <span className="text-gold-400">{currentSubcategory.name}</span>
+                      <span className="text-primary-400">{currentSubcategory.name}</span>
                     )}
                   </>
                 ) : (
-                  <span className="text-gold-400">{currentCategory.name}</span>
+                  <span className="text-primary-400">{currentCategory.name}</span>
                 )}
               </>
             ) : (
-              <span className="text-gold-400">Products</span>
+              <span className="text-primary-400">Products</span>
             )}
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Zap className="w-6 h-6 text-charcoal-900" />
             </div>
             <div>
@@ -259,7 +259,7 @@ export function ProductsPage() {
                         to="/products"
                         className={`block py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
                           !currentCategory
-                            ? 'bg-gradient-gold text-charcoal-900'
+                            ? 'bg-gradient-primary text-charcoal-900'
                             : 'text-slate-600 hover:bg-slate-50'
                         }`}
                       >
@@ -272,7 +272,7 @@ export function ProductsPage() {
                           to={`/products/category/${cat.slug}`}
                           className={`block py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
                             currentCategory?.id === cat.id
-                              ? 'bg-gradient-gold text-charcoal-900'
+                              ? 'bg-gradient-primary text-charcoal-900'
                               : 'text-slate-600 hover:bg-slate-50'
                           }`}
                         >
@@ -294,7 +294,7 @@ export function ProductsPage() {
                             to={`/products/category/${currentCategory?.slug}/${sub.slug}`}
                             className={`block py-2.5 px-4 rounded-xl transition-all text-sm font-medium ${
                               currentSubcategory?.id === sub.id
-                                ? 'bg-gradient-gold text-charcoal-900'
+                                ? 'bg-gradient-primary text-charcoal-900'
                                 : 'text-slate-600 hover:bg-slate-50'
                             }`}
                           >
@@ -302,14 +302,14 @@ export function ProductsPage() {
                           </Link>
                           {/* Show child subcategories if this subcategory is selected */}
                           {currentSubcategory?.id === sub.id && childSubcategories.length > 0 && (
-                            <ul className="ml-3 mt-1 space-y-1 border-l-2 border-gold-200 pl-3">
+                            <ul className="ml-3 mt-1 space-y-1 border-l-2 border-primary-200 pl-3">
                               {childSubcategories.map((child) => (
                                 <li key={child.id}>
                                   <Link
                                     to={`/products/category/${currentCategory?.slug}/${sub.slug}/${child.slug}`}
                                     className={`block py-1.5 px-3 rounded-lg transition-all text-xs font-medium ${
                                       currentChildSubcategory?.id === child.id
-                                        ? 'bg-gold-100 text-gold-700'
+                                        ? 'bg-primary-100 text-primary-700'
                                         : 'text-slate-500 hover:text-slate-700'
                                     }`}
                                   >
@@ -341,7 +341,7 @@ export function ProductsPage() {
                         <Link
                           key={sub.id}
                           to={`/products/category/${currentCategory.slug}/${sub.slug}`}
-                          className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-premium-lg transition-all duration-300 p-3 flex flex-col hover:border-gold-300 transform hover:-translate-y-1"
+                          className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-premium-lg transition-all duration-300 p-3 flex flex-col hover:border-primary-300 transform hover:-translate-y-1"
                         >
                           <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-50 mb-3 relative">
                             <img
@@ -361,7 +361,7 @@ export function ProductsPage() {
                               </div>
                             )}
                           </div>
-                          <h3 className="font-heading font-semibold text-charcoal-800 group-hover:text-gold-600 transition-colors text-sm truncate">
+                          <h3 className="font-heading font-semibold text-charcoal-800 group-hover:text-primary-600 transition-colors text-sm truncate">
                             {sub.name}
                           </h3>
                         </Link>
@@ -434,8 +434,8 @@ export function ProductsPage() {
                       onClick={() => setSelectedProduct(product)}
                       className={`group cursor-pointer transform hover:-translate-y-1 transition-all duration-300 ${
                         viewMode === 'grid'
-                          ? 'bg-white rounded-2xl border border-slate-100 hover:border-gold-200 overflow-hidden hover:shadow-gold-lg'
-                          : 'bg-white rounded-xl border border-slate-100 hover:border-gold-200 p-4 flex gap-6 hover:shadow-premium-lg'
+                          ? 'bg-white rounded-2xl border border-slate-100 hover:border-primary-200 overflow-hidden hover:shadow-primary-lg'
+                          : 'bg-white rounded-xl border border-slate-100 hover:border-primary-200 p-4 flex gap-6 hover:shadow-premium-lg'
                       }`}
                     >
                       {/* Image */}
@@ -456,7 +456,7 @@ export function ProductsPage() {
                         )}
                         {product.category && viewMode === 'grid' && (
                           <div className="absolute top-3 left-3">
-                            <span className="badge-gold text-xs">{product.category.name}</span>
+                            <span className="badge-primary text-xs">{product.category.name}</span>
                           </div>
                         )}
                       </div>
@@ -464,9 +464,9 @@ export function ProductsPage() {
                       {/* Content */}
                       <div className={viewMode === 'grid' ? 'p-5' : 'flex-1 py-1'}>
                         {product.category && viewMode === 'list' && (
-                          <span className="badge-gold text-xs mb-2">{product.category.name}</span>
+                          <span className="badge-primary text-xs mb-2">{product.category.name}</span>
                         )}
-                        <h3 className={`font-heading font-semibold text-charcoal-900 mb-2 group-hover:text-gold-600 transition-colors ${
+                        <h3 className={`font-heading font-semibold text-charcoal-900 mb-2 group-hover:text-primary-600 transition-colors ${
                           viewMode === 'grid' ? 'text-lg' : 'text-base'
                         }`}>
                           {product.name}
@@ -476,7 +476,7 @@ export function ProductsPage() {
                             {product.short_description}
                           </p>
                         )}
-                        <div className="flex items-center gap-2 text-gold-600 font-medium text-sm group-hover:gap-3 transition-all">
+                        <div className="flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
                           <span>View Details</span>
                           <ArrowRight className="w-4 h-4" />
                         </div>

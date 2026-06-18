@@ -42,9 +42,9 @@ export function CategorySection() {
       <div className="container-wide">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold-100 rounded-full mb-6">
-            <Zap className="w-4 h-4 text-gold-600" />
-            <span className="text-gold-700 text-sm font-semibold tracking-wide uppercase">Our Products</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 rounded-full mb-6">
+            <Zap className="w-4 h-4 text-primary-600" />
+            <span className="text-primary-700 text-sm font-semibold tracking-wide uppercase">Our Products</span>
           </div>
           <h2 className="font-heading text-heading-1 text-charcoal-900 mb-4">
             Explore Our Product Categories
@@ -60,7 +60,7 @@ export function CategorySection() {
             <Link
               key={category.id}
               to={`/products/category/${category.slug}`}
-              className="group relative overflow-hidden rounded-2xl bg-white border border-slate-100 hover:border-gold-200 transition-all duration-500 hover:shadow-premium-lg"
+              className="group relative overflow-hidden rounded-2xl bg-white border border-slate-100 hover:border-primary-200 transition-all duration-500 hover:shadow-premium-lg"
             >
               {/* Image Container */}
               <div className="relative aspect-[16/9] sm:aspect-[4/3] md:aspect-[4/5] overflow-hidden">
@@ -87,7 +87,7 @@ export function CategorySection() {
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="font-heading text-xl font-semibold text-white mb-2 group-hover:text-gold-400 transition-colors">
+                <h3 className="font-heading text-xl font-semibold text-white mb-2 group-hover:text-primary-400 transition-colors">
                   {category.name}
                 </h3>
                 {category.description && (
@@ -95,7 +95,7 @@ export function CategorySection() {
                     {category.description}
                   </p>
                 )}
-                <div className="flex items-center gap-2 text-gold-400 font-medium text-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
+                <div className="flex items-center gap-2 text-primary-400 font-medium text-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
                   <span>Explore Category</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>

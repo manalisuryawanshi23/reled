@@ -21,7 +21,7 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 const categoryColors: Record<string, { bg: string; gradient: string }> = {
-  'indoor-lights': { bg: 'bg-amber-500', gradient: 'from-amber-500 to-orange-500' },
+  'indoor-lights': { bg: 'bg-primary-500', gradient: 'from-primary-500 to-orange-500' },
   'magnetic-lights': { bg: 'bg-violet-500', gradient: 'from-violet-500 to-purple-600' },
   'profile-lights': { bg: 'bg-sky-500', gradient: 'from-sky-500 to-blue-600' },
   'outdoor-lights': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-teal-600' },
@@ -205,15 +205,15 @@ export function Navbar() {
           <nav className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 md:gap-3 group flex-shrink-0">
-              <div className="relative w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/50 group-hover:scale-105 transition-all duration-300">
-                <Zap className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <div className="relative w-10 h-10 md:w-11 md:h-11 bg-[#E31837] rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30 group-hover:shadow-primary-500/50 group-hover:scale-105 transition-all duration-300">
+                <span className="text-white font-serif font-bold text-xl md:text-2xl tracking-tight">Re</span>
               </div>
               <div className="block">
-                <span className="font-bold text-lg md:text-xl text-slate-900 tracking-tight block leading-tight">
-                  {settings.company_name}
+                <span className="font-black text-2xl md:text-3xl text-charcoal-800 tracking-tighter block leading-none mt-1 uppercase">
+                  LED
                 </span>
-                <span className="text-[9px] md:text-[10px] text-amber-600 font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase block leading-tight">
-                  LIGHTING SOLUTIONS
+                <span className="text-[9px] md:text-[10px] text-charcoal-600 font-semibold tracking-wide capitalize block leading-tight mt-0.5">
+                  Roshni Jo Saath Rahe
                 </span>
               </div>
             </Link>
@@ -231,7 +231,7 @@ export function Navbar() {
                       <button
                         className={`flex items-center gap-1 px-4 xl:px-5 py-2 text-[13px] font-semibold tracking-wide transition-all duration-200 rounded-lg ${
                           isActive(link.path)
-                            ? 'text-amber-600'
+                            ? 'text-primary-600'
                             : 'text-slate-600 hover:text-slate-900'
                         }`}
                       >
@@ -243,7 +243,7 @@ export function Navbar() {
                     <Link
                       to={link.path}
                       className={`block px-4 xl:px-5 py-2 text-[13px] font-semibold tracking-wide transition-colors duration-200 ${
-                        isActive(link.path) ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900'
+                        isActive(link.path) ? 'text-primary-600' : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       {link.name}
@@ -257,7 +257,7 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[13px] font-semibold tracking-wide rounded-lg shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:from-amber-600 hover:to-orange-600 transition-all duration-200"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-500 to-orange-500 text-white text-[13px] font-semibold tracking-wide rounded-lg shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 hover:from-primary-600 hover:to-orange-600 transition-all duration-200"
               >
                 Get Quote
                 <ArrowRight className="w-4 h-4" />
@@ -269,7 +269,7 @@ export function Navbar() {
               {settings.phone_1 && (
                 <a
                   href={`tel:${settings.phone_1}`}
-                  className="p-2 text-amber-600 hover:text-amber-700 transition-colors"
+                  className="p-2 text-primary-600 hover:text-primary-700 transition-colors"
                   aria-label={`Call ${settings.phone_1}`}
                 >
                   <Phone className="w-5 h-5" />
@@ -277,7 +277,7 @@ export function Navbar() {
               )}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 -mr-2 text-slate-700 hover:text-amber-600 transition-colors"
+                className="p-2 -mr-2 text-slate-700 hover:text-primary-600 transition-colors"
                 aria-label="Toggle menu"
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -316,7 +316,7 @@ export function Navbar() {
                         to={`/products/category/${cat.slug}`}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                           isHovered
-                            ? 'bg-white shadow-sm text-slate-900 font-bold border-l-4 border-amber-500 pl-3'
+                            ? 'bg-white shadow-sm text-slate-900 font-bold border-l-4 border-primary-500 pl-3'
                             : 'text-slate-600 hover:bg-white/50 font-medium'
                         }`}
                         onMouseEnter={() => setHoveredCategory(cat.id)}
@@ -356,7 +356,7 @@ export function Navbar() {
                           </div>
                           <Link
                             to={`/products/category/${cat.slug}`}
-                            className="ml-auto inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 hover:text-amber-700 transition-colors"
+                            className="ml-auto inline-flex items-center gap-1.5 text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors"
                           >
                             View All
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -370,7 +370,7 @@ export function Navbar() {
                               <div key={sub.id} className="space-y-3">
                                 <Link
                                   to={`/products/category/${cat.slug}/${sub.slug}`}
-                                  className="group flex items-center justify-between text-sm font-bold text-slate-800 hover:text-amber-600 transition-colors border-b border-slate-100 pb-1.5"
+                                  className="group flex items-center justify-between text-sm font-bold text-slate-800 hover:text-primary-600 transition-colors border-b border-slate-100 pb-1.5"
                                 >
                                   <span>{sub.name}</span>
                                   <ChevronRight className="w-3.5 h-3.5 text-slate-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
@@ -381,7 +381,7 @@ export function Navbar() {
                                       <li key={child.id}>
                                         <Link
                                           to={`/products/category/${cat.slug}/${sub.slug}/${child.slug}`}
-                                          className="text-xs text-slate-500 hover:text-amber-600 transition-colors py-1.5 px-2 hover:bg-slate-50 rounded block font-medium"
+                                          className="text-xs text-slate-500 hover:text-primary-600 transition-colors py-1.5 px-2 hover:bg-slate-50 rounded block font-medium"
                                         >
                                           {child.name}
                                         </Link>
@@ -427,7 +427,7 @@ export function Navbar() {
               </div>
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-amber-600 hover:text-amber-700 transition-colors"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-primary-600 hover:text-primary-700 transition-colors"
               >
                 Browse All Products
                 <ArrowRight className="w-4 h-4" />
@@ -450,12 +450,12 @@ export function Navbar() {
         <div className="sticky top-0 bg-white border-b border-slate-100 z-10">
           <div className="flex items-center justify-between p-4">
             <Link to="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-400 via-primary-500 to-orange-500 rounded-xl flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
               </div>
               <div>
                 <span className="font-bold text-base text-slate-900 block">{settings.company_name}</span>
-                <span className="text-[8px] text-amber-600 font-semibold tracking-widest uppercase">LIGHTING</span>
+                <span className="text-[8px] text-primary-600 font-semibold tracking-widest uppercase">LIGHTING</span>
               </div>
             </Link>
             <button
@@ -479,7 +479,7 @@ export function Navbar() {
                       onClick={() => setExpandedMobileCategory(expandedMobileCategory === 'products' ? null : 'products')}
                       className={`w-full flex items-center justify-between p-4 rounded-xl font-semibold transition-colors ${
                         isActive('/products') || expandedMobileCategory === 'products'
-                          ? 'bg-amber-50 text-amber-600'
+                          ? 'bg-primary-50 text-primary-600'
                           : 'text-slate-700 hover:bg-slate-50'
                       }`}
                     >
@@ -494,7 +494,7 @@ export function Navbar() {
                       <div className="mt-2 ml-2 space-y-2">
                         <Link
                           to="/products"
-                          className="block p-3 px-4 text-sm font-medium text-slate-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                          className="block p-3 px-4 text-sm font-medium text-slate-600 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
                           onClick={() => setIsOpen(false)}
                         >
                           All Products
@@ -538,7 +538,7 @@ export function Navbar() {
                                     <div key={sub.id}>
                                       <Link
                                         to={`/products/category/${cat.slug}/${sub.slug}`}
-                                        className="flex items-center gap-2 py-2 px-2 text-sm text-slate-600 hover:text-amber-600 transition-colors"
+                                        className="flex items-center gap-2 py-2 px-2 text-sm text-slate-600 hover:text-primary-600 transition-colors"
                                         onClick={() => setIsOpen(false)}
                                       >
                                         <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
@@ -550,7 +550,7 @@ export function Navbar() {
                                             <Link
                                               key={child.id}
                                               to={`/products/category/${cat.slug}/${sub.slug}/${child.slug}`}
-                                              className="flex items-center gap-1 py-1.5 px-2 text-xs text-slate-400 hover:text-amber-600 transition-colors"
+                                              className="flex items-center gap-1 py-1.5 px-2 text-xs text-slate-400 hover:text-primary-600 transition-colors"
                                               onClick={() => setIsOpen(false)}
                                             >
                                               <ChevronRight className="w-3 h-3" />
@@ -574,7 +574,7 @@ export function Navbar() {
                     to={link.path}
                     className={`block p-4 rounded-xl font-semibold transition-colors ${
                       isActive(link.path)
-                        ? 'bg-amber-50 text-amber-600'
+                        ? 'bg-primary-50 text-primary-600'
                         : 'text-slate-700 hover:bg-slate-50'
                     }`}
                     onClick={() => setIsOpen(false)}
@@ -590,7 +590,7 @@ export function Navbar() {
           <div className="sticky bottom-0 bg-white border-t border-slate-100 p-4 mt-4 space-y-2">
             <Link
               to="/contact"
-              className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-primary-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg"
               onClick={() => setIsOpen(false)}
             >
               Get a Quote
@@ -611,7 +611,7 @@ export function Navbar() {
             {settings.phone_1 && (
               <a
                 href={`tel:${settings.phone_1}`}
-                className="flex items-center justify-center gap-2 w-full py-3 text-amber-600 font-semibold"
+                className="flex items-center justify-center gap-2 w-full py-3 text-primary-600 font-semibold"
               >
                 <Phone className="w-4 h-4" />
                 {settings.phone_1}

@@ -76,7 +76,7 @@ export function TestimonialsSection() {
     <section className="section-dark relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gold-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-royal-500/10 rounded-full blur-3xl" />
       </div>
 
@@ -84,7 +84,7 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-6">
-            <Zap className="w-4 h-4 text-gold-400" />
+            <Zap className="w-4 h-4 text-primary-400" />
             <span className="text-white/80 text-sm font-medium tracking-wide uppercase">Testimonials</span>
           </div>
           <h2 className="font-heading text-heading-1 text-white mb-4">
@@ -98,7 +98,7 @@ export function TestimonialsSection() {
         {/* Carousel */}
         <div className="relative max-w-4xl mx-auto">
           {/* Quote Icon */}
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-gold rounded-2xl flex items-center justify-center shadow-gold rotate-12">
+          <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-primary rotate-12">
             <Quote className="w-8 h-8 text-charcoal-900 -rotate-12" />
           </div>
 
@@ -117,7 +117,7 @@ export function TestimonialsSection() {
                           key={i}
                           className={`w-5 h-5 ${
                             i < testimonial.star_rating
-                              ? 'text-gold-500 fill-gold-500'
+                              ? 'text-primary-500 fill-primary-500'
                               : 'text-slate-600'
                           }`}
                         />
@@ -135,10 +135,10 @@ export function TestimonialsSection() {
                         <img
                           src={testimonial.photo_url}
                           alt={testimonial.customer_name}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-gold-500 mb-4"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-primary-500 mb-4"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-gradient-gold flex items-center justify-center text-2xl font-bold text-charcoal-900 mb-4">
+                        <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center text-2xl font-bold text-charcoal-900 mb-4">
                           {testimonial.customer_name.charAt(0)}
                         </div>
                       )}
@@ -180,7 +180,7 @@ export function TestimonialsSection() {
               onClick={() => setCurrentIndex(index)}
               className={`h-2 rounded-full transition-all ${
                 index === currentIndex
-                  ? 'w-8 bg-gold-500'
+                  ? 'w-8 bg-primary-500'
                   : 'w-2 bg-white/20 hover:bg-white/40'
               }`}
             />

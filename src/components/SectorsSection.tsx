@@ -133,20 +133,20 @@ export function SectorsSection() {
             <Link
               key={sector.id}
               to={`/sectors/${sector.slug}`}
-              className="group relative bg-white rounded-2xl border border-slate-100 hover:border-gold-200 p-8 transition-all duration-500 hover:shadow-premium-lg"
+              className="group relative bg-white rounded-2xl border border-slate-100 hover:border-primary-200 p-8 transition-all duration-500 hover:shadow-premium-lg"
             >
               {/* Sector Number */}
-              <div className="absolute top-4 right-4 font-heading text-2xl font-bold text-slate-100 group-hover:text-gold-100 transition-colors">
+              <div className="absolute top-4 right-4 font-heading text-2xl font-bold text-slate-100 group-hover:text-primary-100 transition-colors">
                 {String(index + 1).padStart(2, '0')}
               </div>
 
               {/* Icon */}
-              <div className="w-14 h-14 bg-slate-100 group-hover:bg-gradient-gold rounded-xl flex items-center justify-center mb-6 transition-all duration-300 text-slate-500 group-hover:text-charcoal-900">
+              <div className="w-14 h-14 bg-slate-100 group-hover:bg-gradient-primary rounded-xl flex items-center justify-center mb-6 transition-all duration-300 text-slate-500 group-hover:text-charcoal-900">
                 {iconMap[sector.slug] || <Zap className="w-7 h-7" />}
               </div>
 
               {/* Content */}
-              <h3 className="font-heading text-xl font-semibold text-charcoal-900 group-hover:text-gold-600 transition-colors mb-3">
+              <h3 className="font-heading text-xl font-semibold text-charcoal-900 group-hover:text-primary-600 transition-colors mb-3">
                 {sector.name}
               </h3>
               <p className="text-slate-500 text-sm leading-relaxed mb-4">
@@ -154,7 +154,7 @@ export function SectorsSection() {
               </p>
 
               {/* Link */}
-              <div className="flex items-center gap-2 text-gold-600 font-medium text-sm md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
+              <div className="flex items-center gap-2 text-primary-600 font-medium text-sm md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0">
                 <span>Learn More</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>

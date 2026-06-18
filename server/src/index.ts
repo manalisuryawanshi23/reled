@@ -441,6 +441,21 @@ ${allUrls.map(u => `  <url>
   }
 });
 
+// =================================================================
+// FRONTEND STATIC SERVING (For Tunneling / Production)
+// =================================================================
+const DIST_DIR = path.join(__dirname, '../../dist');
+if (fs.existsSync(DIST_DIR)) {
+  app.use(express.static(DIST_DIR));
+  app.get('*', (_req: Request, res: Response) => {
+    res.sendFile(path.join(DIST_DIR, 'index.html'));
+  });
+} else {
+  app.get('*', (_req: Request, res: Response) => {
+    res.send('API is running, but frontend build (dist) not found. Run npm run build first.');
+  });
+}
+
 // Start server and initialize database
 app.listen(PORT, async () => {
   console.log(`RELED Express Server is running on port ${PORT}`);

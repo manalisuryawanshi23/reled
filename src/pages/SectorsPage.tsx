@@ -106,26 +106,26 @@ export function SectorsPage() {
       <section className="relative bg-charcoal-950 text-white py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-500/20 rounded-full blur-3xl" />
         </div>
         <div className="container-wide relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm flex-wrap">
-            <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
+            <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
             {currentSector ? (
               <>
-                <Link to="/sectors" className="hover:text-gold-400 transition-colors">Sectors</Link>
+                <Link to="/sectors" className="hover:text-primary-400 transition-colors">Sectors</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-gold-400">{currentSector.name}</span>
+                <span className="text-primary-400">{currentSector.name}</span>
               </>
             ) : (
-              <span className="text-gold-400">Sectors</span>
+              <span className="text-primary-400">Sectors</span>
             )}
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Zap className="w-6 h-6 text-charcoal-900" />
             </div>
             <div>
@@ -182,18 +182,18 @@ export function SectorsPage() {
                       <Link
                         key={sector.id}
                         to={`/sectors/${sector.slug}`}
-                        className="group p-6 bg-white rounded-2xl border border-slate-100 hover:border-gold-300 hover:shadow-premium-lg transition-all duration-300"
+                        className="group p-6 bg-white rounded-2xl border border-slate-100 hover:border-primary-300 hover:shadow-premium-lg transition-all duration-300"
                       >
-                        <div className="w-12 h-12 bg-gold-100 group-hover:bg-gradient-gold rounded-xl flex items-center justify-center mb-4 transition-all text-gold-600 group-hover:text-charcoal-900">
+                        <div className="w-12 h-12 bg-primary-100 group-hover:bg-gradient-primary rounded-xl flex items-center justify-center mb-4 transition-all text-primary-600 group-hover:text-charcoal-900">
                           {iconMap[sector.slug] || <Factory className="w-6 h-6" />}
                         </div>
-                        <h3 className="font-heading font-semibold text-lg text-charcoal-900 group-hover:text-gold-600 mb-2 transition-colors">
+                        <h3 className="font-heading font-semibold text-lg text-charcoal-900 group-hover:text-primary-600 mb-2 transition-colors">
                           {sector.name}
                         </h3>
                         <p className="text-slate-500 text-sm leading-relaxed">
                           {sector.short_description}
                         </p>
-                        <div className="flex items-center gap-1 text-gold-500 text-sm font-medium mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1 text-primary-500 text-sm font-medium mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
                           <span>Learn More</span>
                           <ArrowRight className="w-4 h-4" />
                         </div>
@@ -232,7 +232,7 @@ export function SectorsPage() {
                       <p className="text-slate-300 text-sm line-clamp-2 mb-3">
                         {sector.short_description}
                       </p>
-                      <div className="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="flex items-center gap-2 text-primary-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span>Learn More</span>
                         <ArrowRight className="w-4 h-4" />
                       </div>

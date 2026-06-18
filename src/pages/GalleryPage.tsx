@@ -48,18 +48,18 @@ export function GalleryPage() {
       <section className="relative bg-charcoal-950 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gold-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container-wide relative z-10">
           <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm">
-            <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
+            <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gold-400">Gallery</span>
+            <span className="text-primary-400">Gallery</span>
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <ImageIcon className="w-6 h-6 text-charcoal-900" />
             </div>
             <div>
@@ -82,8 +82,8 @@ export function GalleryPage() {
                 onClick={() => setSelectedCategory(null)}
                 className={`px-6 py-3 rounded-full font-medium text-sm transition-all ${
                   !selectedCategory
-                    ? 'bg-gradient-gold text-charcoal-900 shadow-gold'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:border-gold-300 hover:text-gold-600'
+                    ? 'bg-gradient-primary text-charcoal-900 shadow-primary'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:border-primary-300 hover:text-primary-600'
                 }`}
               >
                 All Projects
@@ -94,8 +94,8 @@ export function GalleryPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-6 py-3 rounded-full font-medium text-sm transition-all ${
                     selectedCategory === cat
-                      ? 'bg-gradient-gold text-charcoal-900 shadow-gold'
-                      : 'bg-white border border-slate-200 text-slate-600 hover:border-gold-300 hover:text-gold-600'
+                      ? 'bg-gradient-primary text-charcoal-900 shadow-primary'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:border-primary-300 hover:text-primary-600'
                   }`}
                 >
                   {cat}
@@ -141,7 +141,7 @@ export function GalleryPage() {
                   {(item.title || item.project_name) && (
                     <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <p className="text-white font-medium truncate">{item.title || item.project_name}</p>
-                      {item.category && <p className="text-gold-300 text-sm">{item.category}</p>}
+                      {item.category && <p className="text-primary-300 text-sm">{item.category}</p>}
                     </div>
                   )}
                 </div>

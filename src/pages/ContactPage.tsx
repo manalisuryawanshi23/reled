@@ -93,17 +93,17 @@ export function ContactPage() {
       <section className="relative bg-charcoal-950 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gold-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container-wide relative z-10">
           <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm">
-            <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
-            <span className="text-gold-400"> / Contact Us</span>
+            <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
+            <span className="text-primary-400"> / Contact Us</span>
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Mail className="w-6 h-6 text-charcoal-900" />
             </div>
             <div>
@@ -130,8 +130,8 @@ export function ContactPage() {
                 <div className="space-y-6">
                   {settings.address && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-gold-600" />
+                      <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-primary-600" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-charcoal-900 mb-1">Address</h4>
@@ -141,16 +141,16 @@ export function ContactPage() {
                   )}
                   {settings.phone_1 && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-gold-600" />
+                      <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-primary-600" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-charcoal-900 mb-1">Phone</h4>
-                        <a href={`tel:${settings.phone_1}`} className="text-slate-500 hover:text-gold-600 transition-colors block">
+                        <a href={`tel:${settings.phone_1}`} className="text-slate-500 hover:text-primary-600 transition-colors block">
                           {settings.phone_1}
                         </a>
                         {settings.phone_2 && (
-                          <a href={`tel:${settings.phone_2}`} className="text-slate-500 hover:text-gold-600 transition-colors block">
+                          <a href={`tel:${settings.phone_2}`} className="text-slate-500 hover:text-primary-600 transition-colors block">
                             {settings.phone_2}
                           </a>
                         )}
@@ -159,20 +159,20 @@ export function ContactPage() {
                   )}
                   {settings.email && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-5 h-5 text-gold-600" />
+                      <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-5 h-5 text-primary-600" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-charcoal-900 mb-1">Email</h4>
-                        <a href={`mailto:${settings.email}`} className="text-slate-500 hover:text-gold-600 transition-colors">
+                        <a href={`mailto:${settings.email}`} className="text-slate-500 hover:text-primary-600 transition-colors">
                           {settings.email}
                         </a>
                       </div>
                     </div>
                   )}
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gold-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-5 h-5 text-gold-600" />
+                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-5 h-5 text-primary-600" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-charcoal-900 mb-1">Business Hours</h4>

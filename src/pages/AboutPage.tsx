@@ -67,17 +67,17 @@ export function AboutPage() {
       <section className="relative bg-charcoal-950 text-white py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-500/20 rounded-full blur-3xl" />
         </div>
         <div className="container-wide relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-slate-400 mb-6 text-sm flex-wrap">
-            <Link to="/" className="hover:text-gold-400 transition-colors">Home</Link>
+            <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-gold-400">About Us</span>
+            <span className="text-primary-400">About Us</span>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Zap className="w-6 h-6 text-charcoal-900" />
             </div>
             <div>
@@ -104,7 +104,7 @@ export function AboutPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-5 -right-5 w-32 h-32 bg-gradient-gold rounded-2xl flex items-center justify-center shadow-gold hidden md:flex">
+              <div className="absolute -bottom-5 -right-5 w-32 h-32 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-primary hidden md:flex">
                 <div className="text-center text-charcoal-900">
                   <div className="font-heading text-3xl font-bold">{settings.years_experience || 10}+</div>
                   <div className="text-xs font-semibold uppercase tracking-wide">Years</div>
@@ -113,7 +113,7 @@ export function AboutPage() {
             </div>
 
             <div>
-              <span className="inline-block text-gold-600 font-semibold text-sm uppercase tracking-wider mb-3">Our Story</span>
+              <span className="inline-block text-primary-600 font-semibold text-sm uppercase tracking-wider mb-3">Our Story</span>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-charcoal-900 mb-5">
                 Illuminating India Since Inception
               </h2>
@@ -153,7 +153,7 @@ export function AboutPage() {
       <section className="section bg-charcoal-950">
         <div className="container-wide">
           <div className="text-center mb-12">
-            <span className="inline-block text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Our Achievements</span>
+            <span className="inline-block text-primary-400 font-semibold text-sm uppercase tracking-wider mb-3">Our Achievements</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-white">
               Numbers That Speak for Themselves
             </h2>
@@ -171,7 +171,7 @@ export function AboutPage() {
                 ref={ref}
                 className="text-center p-6 md:p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 transition-colors"
               >
-                <div className="w-12 h-12 bg-gold-500/20 rounded-xl flex items-center justify-center mx-auto mb-4 text-gold-400">
+                <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center mx-auto mb-4 text-primary-400">
                   {icon}
                 </div>
                 <div className="font-heading text-3xl md:text-4xl font-bold text-white mb-1">{count}{suffix}</div>
@@ -186,15 +186,15 @@ export function AboutPage() {
       <section className="section bg-white">
         <div className="container-wide">
           <div className="text-center mb-12">
-            <span className="inline-block text-gold-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Stand For</span>
+            <span className="inline-block text-primary-600 font-semibold text-sm uppercase tracking-wider mb-3">What We Stand For</span>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-charcoal-900">
               Our Core Values
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
-              <div key={index} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-gold-200 hover:shadow-card transition-all">
-                <div className="w-10 h-10 bg-gradient-gold rounded-xl flex items-center justify-center mb-4">
+              <div key={index} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-primary-200 hover:shadow-card transition-all">
+                <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center mb-4">
                   <span className="font-heading font-bold text-charcoal-900 text-sm">0{index + 1}</span>
                 </div>
                 <h3 className="font-heading font-semibold text-lg text-charcoal-900 mb-3">{value.title}</h3>
@@ -210,7 +210,7 @@ export function AboutPage() {
         <section className="section bg-slate-50">
           <div className="container-wide">
             <div className="text-center mb-12">
-              <span className="inline-block text-gold-600 font-semibold text-sm uppercase tracking-wider mb-3">Leadership</span>
+              <span className="inline-block text-primary-600 font-semibold text-sm uppercase tracking-wider mb-3">Leadership</span>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-charcoal-900">
                 Meet Our Team
               </h2>
@@ -218,7 +218,7 @@ export function AboutPage() {
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {team.map((member) => (
                 <div key={member.id} className="text-center group">
-                  <div className="w-28 h-28 md:w-36 md:h-36 mx-auto mb-4 rounded-2xl overflow-hidden shadow-card border-2 border-transparent group-hover:border-gold-400 transition-all">
+                  <div className="w-28 h-28 md:w-36 md:h-36 mx-auto mb-4 rounded-2xl overflow-hidden shadow-card border-2 border-transparent group-hover:border-primary-400 transition-all">
                     {member.photo_url ? (
                       <img src={member.photo_url} alt={member.name} className="w-full h-full object-cover" />
                     ) : (
@@ -228,7 +228,7 @@ export function AboutPage() {
                     )}
                   </div>
                   <h3 className="font-heading font-semibold text-charcoal-900">{member.name}</h3>
-                  <p className="text-gold-600 text-sm mb-1 font-medium">{member.designation}</p>
+                  <p className="text-primary-600 text-sm mb-1 font-medium">{member.designation}</p>
                   {member.bio && <p className="text-slate-500 text-xs leading-relaxed">{member.bio}</p>}
                 </div>
               ))}

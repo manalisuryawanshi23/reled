@@ -43,13 +43,13 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-gold rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
                 <Zap className="w-5 h-5 text-charcoal-900" />
               </div>
               <div>
                 <h2 className="font-heading text-xl font-bold text-charcoal-900">{product.name}</h2>
                 {product.category && (
-                  <span className="badge-gold text-xs">{product.category.name}</span>
+                  <span className="badge-primary text-xs">{product.category.name}</span>
                 )}
               </div>
             </div>
@@ -95,7 +95,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                               key={index}
                               onClick={() => setCurrentImageIndex(index)}
                               className={`h-2 rounded-full transition-all ${
-                                index === currentImageIndex ? 'w-6 bg-gold-500' : 'w-2 bg-white/70'
+                                index === currentImageIndex ? 'w-6 bg-primary-500' : 'w-2 bg-white/70'
                               }`}
                             />
                           ))}
@@ -133,7 +133,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                           className="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50/50 transition-colors"
                         >
                           <span className="text-sm font-semibold text-slate-500">{key}</span>
-                          <span className="text-sm font-bold text-charcoal-950 bg-gold-50 text-gold-700 px-3 py-1 rounded-lg border border-gold-100">{value}</span>
+                          <span className="text-sm font-bold text-charcoal-950 bg-primary-50 text-primary-700 px-3 py-1 rounded-lg border border-primary-100">{value}</span>
                         </div>
                       ))}
                     </div>
@@ -144,7 +144,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                 <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-100">
                   <button
                     onClick={() => setShowEnquiry(true)}
-                    className="btn-primary flex-1 flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-100 transition-all shadow-lg shadow-gold/20"
+                    className="btn-primary flex-1 flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-100 transition-all shadow-lg shadow-primary/20"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Send Enquiry
