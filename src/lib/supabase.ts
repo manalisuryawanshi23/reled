@@ -11,6 +11,7 @@ class QueryBuilder {
   private payload: any = null;
   private countOption: string | null = null;
   private isHead: boolean = false;
+  private limitCount: number | null = null;
 
   constructor(tableName: string) {
     this.tableName = tableName;
@@ -61,6 +62,11 @@ class QueryBuilder {
     return this;
   }
 
+  limit(count: number) {
+    this.limitCount = count;
+    return this;
+  }
+
   // Thenable implementation to support direct await calls: await supabase.from('table').select('*')
   async then(resolve: (value: any) => void) {
     try {
@@ -79,6 +85,10 @@ class QueryBuilder {
       // Add sorting
       if (this.orders.length > 0) {
         queryParams.append('order', this.orders[0]);
+      }
+
+      if (this.limitCount !== null) {
+        queryParams.append('limit', String(this.limitCount));
       }
 
       const queryString = queryParams.toString();

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Save, CheckCircle } from 'lucide-react';
+import { Save, CheckCircle, Plus, Trash2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useSettings } from '../../context/SettingsContext';
 import type { Settings } from '../../lib/types';
+import { ImageUploadField } from '../../components/ImageUploadField';
 
 export function AdminSettings() {
   const { settings: contextSettings, refreshSettings } = useSettings();
@@ -18,7 +19,15 @@ export function AdminSettings() {
     e.preventDefault();
     setLoading(true);
 
-    await supabase.from('settings').update(formData).eq('id', 1);
+    // Filter out any completely empty slides before saving
+    const cleanedData = { ...formData };
+    if (cleanedData.hero_slides) {
+      cleanedData.hero_slides = cleanedData.hero_slides.filter(
+        slide => slide.image_url || slide.headline || slide.subheadline
+      );
+    }
+
+    await supabase.from('settings').update(cleanedData).eq('id', 1);
     await refreshSettings();
 
     setLoading(false);
@@ -32,6 +41,28 @@ export function AdminSettings() {
       ...prev,
       [name]: type === 'number' ? parseInt(value) || 0 : value,
     }));
+  };
+
+  const addSlide = () => {
+    setFormData(prev => ({
+      ...prev,
+      hero_slides: [...(prev.hero_slides || []), { image_url: '', headline: '', subheadline: '', cta_text: '', cta_link: '' }]
+    }));
+  };
+
+  const removeSlide = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      hero_slides: (prev.hero_slides || []).filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateSlide = (index: number, field: string, value: string) => {
+    setFormData(prev => {
+      const newSlides = [...(prev.hero_slides || [])];
+      newSlides[index] = { ...newSlides[index], [field]: value };
+      return { ...prev, hero_slides: newSlides };
+    });
   };
 
   return (
@@ -101,6 +132,59 @@ export function AdminSettings() {
               <label className="input-label">LinkedIn URL</label>
               <input type="text" name="linkedin_url" value={formData.linkedin_url || ''} onChange={handleChange} className="input-field" placeholder="https://linkedin.com/..." />
             </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-heading font-semibold text-lg text-dark-900">Hero Slider</h2>
+            <button type="button" onClick={addSlide} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
+              <Plus className="w-4 h-4" /> Add Slide
+            </button>
+          </div>
+          
+          <div className="space-y-6">
+            {!formData.hero_slides || formData.hero_slides.length === 0 ? (
+              <p className="text-dark-500 text-center py-4 bg-dark-50 rounded-lg">No slides configured. Add one to replace the default slides.</p>
+            ) : (
+              formData.hero_slides.map((slide, index) => (
+                <div key={index} className="p-4 border border-dark-200 rounded-lg relative bg-dark-50">
+                  <button 
+                    type="button" 
+                    onClick={() => removeSlide(index)}
+                    className="absolute top-4 right-4 p-1.5 text-dark-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                  <h3 className="font-medium text-dark-900 mb-4">Slide {index + 1}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="md:col-span-2">
+                      <ImageUploadField 
+                        label="Background Image" 
+                        value={slide.image_url} 
+                        onChange={(url) => updateSlide(index, 'image_url', url)} 
+                      />
+                    </div>
+                    <div>
+                      <label className="input-label">Headline</label>
+                      <input type="text" value={slide.headline || ''} onChange={e => updateSlide(index, 'headline', e.target.value)} className="input-field" />
+                    </div>
+                    <div>
+                      <label className="input-label">Subheadline</label>
+                      <input type="text" value={slide.subheadline || ''} onChange={e => updateSlide(index, 'subheadline', e.target.value)} className="input-field" />
+                    </div>
+                    <div>
+                      <label className="input-label">Button Text</label>
+                      <input type="text" value={slide.cta_text || ''} onChange={e => updateSlide(index, 'cta_text', e.target.value)} className="input-field" />
+                    </div>
+                    <div>
+                      <label className="input-label">Button Link</label>
+                      <input type="text" value={slide.cta_link || ''} onChange={e => updateSlide(index, 'cta_link', e.target.value)} className="input-field" placeholder="/products" />
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
 

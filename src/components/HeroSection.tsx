@@ -31,7 +31,8 @@ export function HeroSection() {
   const { settings } = useSettings();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const slides = settings.hero_slides?.length > 0 ? settings.hero_slides : defaultSlides;
+  const rawSlides = settings.hero_slides?.length > 0 ? settings.hero_slides : defaultSlides;
+  const slides = rawSlides.filter(slide => slide.image_url || slide.headline);
 
   useEffect(() => {
     const timer = setInterval(() => {

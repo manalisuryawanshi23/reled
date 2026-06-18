@@ -193,7 +193,7 @@ app.post('/api/upload', authenticateToken, upload.single('file'), (req: Request,
 // GET: Query table items
 app.get('/api/:table', async (req: Request, res: Response) => {
   const { table } = req.params;
-  const { id, select, order, single, ...filters } = req.query;
+  const { id, select, single, order, limit, ...filters } = req.query;
 
   // List of valid database tables
   const allowedTables = [
@@ -280,6 +280,13 @@ app.get('/api/:table', async (req: Request, res: Response) => {
       const [col, dir] = orderStr.split(':');
       const cleanCol = (table === 'products' && col === 'created_at') ? 'p.created_at' : col;
       queryText += ` ORDER BY ${cleanCol} ${dir === 'desc' ? 'DESC' : 'ASC'}`;
+    }
+
+    if (req.query.limit) {
+      const limitVal = parseInt(req.query.limit as string);
+      if (!isNaN(limitVal)) {
+        queryText += ` LIMIT ${limitVal}`;
+      }
     }
 
     const dbRes = await pool.query(queryText, queryParams);
