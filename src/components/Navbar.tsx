@@ -147,6 +147,7 @@ export function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Products', path: '/products', hasDropdown: true },
+    { name: 'Catalogues', path: '/catalogues' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Sectors', path: '/sectors' },
     { name: 'Contact', path: '/contact' },

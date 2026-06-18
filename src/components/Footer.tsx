@@ -25,6 +25,7 @@ export function Footer() {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Catalogues', path: '/catalogues' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Sectors', path: '/sectors' },
     { name: 'Contact', path: '/contact' },
@@ -203,7 +204,7 @@ export function Footer() {
         <div className="container-wide py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-slate-500 text-xs text-center sm:text-left">
-              © {currentYear} {settings.company_name}. All rights reserved.
+              © {currentYear} {settings.company_name}. All rights reserved. | Developed By <a href="https://www.manalitheboss.com/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors">Manali The Boss</a>
             </p>
             <div className="flex gap-5 text-xs">
               <Link to="/privacy" className="text-slate-500 hover:text-primary-400 transition-colors">

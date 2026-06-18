@@ -7,6 +7,7 @@ import { FloatingButtons } from './components/FloatingButtons';
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { GalleryPage } from './pages/GalleryPage';
+import { CataloguesPage } from './pages/CataloguesPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { SectorsPage } from './pages/SectorsPage';
@@ -58,6 +59,7 @@ function AppRoutes() {
       <Route path="/products/category/:categorySlug/:subcategorySlug" element={<PublicLayout><ProductsPage /></PublicLayout>} />
       <Route path="/products/category/:categorySlug/:subcategorySlug/:childSlug" element={<PublicLayout><ProductsPage /></PublicLayout>} />
       <Route path="/gallery" element={<PublicLayout><GalleryPage /></PublicLayout>} />
+      <Route path="/catalogues" element={<PublicLayout><CataloguesPage /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><AboutPage /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />
       <Route path="/sectors" element={<PublicLayout><SectorsPage /></PublicLayout>} />
