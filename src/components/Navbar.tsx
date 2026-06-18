@@ -31,6 +31,8 @@ const categoryColors: Record<string, { bg: string; gradient: string }> = {
   'ev-chargers': { bg: 'bg-lime-500', gradient: 'from-lime-500 to-green-600' },
 };
 
+import { MobileBottomBar } from './MobileBottomBar';
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -641,6 +643,9 @@ export function Navbar() {
           onMouseEnter={handleMenuLeave}
         />
       )}
+
+      {/* Mobile Bottom Bar */}
+      <MobileBottomBar onMenuClick={() => setIsOpen(true)} />
     </>
   );
 }

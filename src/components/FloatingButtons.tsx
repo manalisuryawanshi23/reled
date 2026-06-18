@@ -11,7 +11,7 @@ export function FloatingButtons() {
     : '#';
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-24 md:bottom-8 right-8 z-50 flex flex-col items-end gap-3">
       {/* Tooltip */}
       <div
         className={`bg-charcoal-900 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-premium-lg transition-all duration-300 ${

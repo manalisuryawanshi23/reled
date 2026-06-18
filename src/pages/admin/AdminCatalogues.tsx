@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, FileText, X, ExternalLink } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import type { Catalogue } from '../../lib/types';
+import { ImageUploadField } from '../../components/ImageUploadField';
+import { FileUploadField } from '../../components/FileUploadField';
 
 export function AdminCatalogues() {
   const [catalogues, setCatalogues] = useState<Catalogue[]>([]);
@@ -135,14 +137,17 @@ export function AdminCatalogues() {
                 <label className="input-label">Description</label>
                 <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="input-field resize-none" rows={3} />
               </div>
-              <div>
-                <label className="input-label">PDF URL *</label>
-                <input type="text" value={formData.pdf_url} onChange={e => setFormData({...formData, pdf_url: e.target.value})} className="input-field" placeholder="https://..." required />
-              </div>
-              <div>
-                <label className="input-label">Thumbnail URL</label>
-                <input type="text" value={formData.thumbnail_url} onChange={e => setFormData({...formData, thumbnail_url: e.target.value})} className="input-field" placeholder="https://..." />
-              </div>
+              <FileUploadField
+                label="PDF Document *"
+                value={formData.pdf_url}
+                onChange={(url) => setFormData({ ...formData, pdf_url: url })}
+                accept=".pdf"
+              />
+              <ImageUploadField
+                label="Thumbnail Image"
+                value={formData.thumbnail_url}
+                onChange={(url) => setFormData({ ...formData, thumbnail_url: url })}
+              />
               <div>
                 <label className="input-label">Category</label>
                 <input type="text" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="input-field" />
