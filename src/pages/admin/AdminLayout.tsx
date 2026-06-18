@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  Layers,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -24,6 +25,7 @@ const navItems = [
   { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
   { name: 'Products', path: '/admin/products', icon: Package },
   { name: 'Categories', path: '/admin/categories', icon: FolderTree },
+  { name: 'Subcategories', path: '/admin/subcategories', icon: Layers },
   { name: 'Enquiries', path: '/admin/enquiries', icon: Mail },
   { name: 'Gallery', path: '/admin/gallery', icon: Image },
   { name: 'Catalogues', path: '/admin/catalogues', icon: FileText },
