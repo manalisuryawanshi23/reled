@@ -58,10 +58,15 @@ async function bootstrapDatabase() {
 
     const settingsExists = tableCheck.rows[0].exists;
     if (!settingsExists) {
-      console.log('Database tables not found. Running initialization schema...');
-      const schemaSql = fs.readFileSync(path.join(__dirname, '../../database_backup.sql'), 'utf8');
-      await pool.query(schemaSql);
-      console.log('Database schema initialized.');
+      console.log('Database tables not found. Attempting to run initialization schema...');
+      const schemaPath = path.join(__dirname, '../../database_backup.sql');
+      if (fs.existsSync(schemaPath)) {
+        const schemaSql = fs.readFileSync(schemaPath, 'utf8');
+        await pool.query(schemaSql);
+        console.log('Database schema initialized from file.');
+      } else {
+        console.log('Warning: database_backup.sql not found at ' + schemaPath + '. Assuming external initialization (e.g. docker-entrypoint).');
+      }
     }
 
     // Check if users table exists and create it if not
