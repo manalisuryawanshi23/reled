@@ -10,25 +10,21 @@ interface CategoryWithSubcategories extends Category {
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
-  'indoor-lights': Sun,
-  'magnetic-lights': Cpu,
-  'profile-lights': Sparkles,
-  'outdoor-lights': Lightbulb,
-  'industrial': Factory,
-  'facade-lights': Lightbulb,
-  'under-water-light': Waves,
-  'ev-chargers': Car,
+  'indoor-lighting': Sun,
+  'outdoor-lighting': Lightbulb,
+  'architectural-lighting': Sparkles,
+  'decorative-pole': Zap,
+  'underwater-light': Waves,
+  'ev-charger': Car,
 };
 
 const categoryColors: Record<string, { bg: string; gradient: string }> = {
-  'indoor-lights': { bg: 'bg-primary-500', gradient: 'from-primary-500 to-orange-500' },
-  'magnetic-lights': { bg: 'bg-violet-500', gradient: 'from-violet-500 to-purple-600' },
-  'profile-lights': { bg: 'bg-sky-500', gradient: 'from-sky-500 to-blue-600' },
-  'outdoor-lights': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-teal-600' },
-  'industrial': { bg: 'bg-slate-700', gradient: 'from-slate-700 to-slate-900' },
-  'facade-lights': { bg: 'bg-rose-500', gradient: 'from-rose-500 to-pink-600' },
-  'under-water-light': { bg: 'bg-cyan-500', gradient: 'from-cyan-500 to-blue-600' },
-  'ev-chargers': { bg: 'bg-lime-500', gradient: 'from-lime-500 to-green-600' },
+  'indoor-lighting': { bg: 'bg-primary-500', gradient: 'from-primary-500 to-orange-500' },
+  'outdoor-lighting': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-teal-600' },
+  'architectural-lighting': { bg: 'bg-violet-500', gradient: 'from-violet-500 to-purple-600' },
+  'decorative-pole': { bg: 'bg-slate-700', gradient: 'from-slate-700 to-slate-900' },
+  'underwater-light': { bg: 'bg-cyan-500', gradient: 'from-cyan-500 to-blue-600' },
+  'ev-charger': { bg: 'bg-lime-500', gradient: 'from-lime-500 to-green-600' },
 };
 
 import { MobileBottomBar } from './MobileBottomBar';
@@ -322,7 +318,7 @@ export function Navbar() {
                 <div className="space-y-1">
                   {categories.map((cat) => {
                     const Icon = categoryIcons[cat.slug] || Lightbulb;
-                    const colors = categoryColors[cat.slug] || categoryColors['indoor-lights'];
+                    const colors = categoryColors[cat.slug] || categoryColors['indoor-lighting'];
                     const isHovered = hoveredCategory === cat.id;
 
                     return (
@@ -355,7 +351,7 @@ export function Navbar() {
                   (() => {
                     const cat = categories.find(c => c.id === hoveredCategory);
                     if (!cat) return null;
-                    const colors = categoryColors[cat.slug] || categoryColors['indoor-lights'];
+                    const colors = categoryColors[cat.slug] || categoryColors['indoor-lighting'];
                     const Icon = categoryIcons[cat.slug] || Lightbulb;
 
                     return (
@@ -516,7 +512,7 @@ export function Navbar() {
                         </Link>
 
                         {categories.map((cat) => {
-                          const colors = categoryColors[cat.slug] || categoryColors['indoor-lights'];
+                          const colors = categoryColors[cat.slug] || categoryColors['indoor-lighting'];
                           const Icon = categoryIcons[cat.slug] || Lightbulb;
 
                           return (

@@ -55,7 +55,7 @@ export function CategorySection() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {categories.map((category, index) => (
             <Link
               key={category.id}
@@ -63,7 +63,7 @@ export function CategorySection() {
               className="group relative overflow-hidden rounded-2xl bg-white border border-slate-100 hover:border-primary-200 transition-all duration-500 hover:shadow-premium-lg"
             >
               {/* Image Container */}
-              <div className="relative aspect-[16/9] sm:aspect-[4/3] md:aspect-[4/5] overflow-hidden">
+              <div className="relative aspect-[16/9] sm:aspect-[4/3] overflow-hidden">
                 {category.image_url ? (
                   <img
                     src={category.image_url}
