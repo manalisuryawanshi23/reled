@@ -157,7 +157,11 @@ export function ProductsPage() {
   return (
     <main className="min-h-screen bg-slate-50">
       {/* Hero Banner */}
-      <section className="relative bg-charcoal-950 text-white py-20 overflow-hidden">
+      <section 
+        className="relative bg-charcoal-950 text-white py-20 overflow-hidden bg-center bg-cover"
+        style={currentCategory?.image_url ? { backgroundImage: `url(${currentCategory.image_url})` } : {}}
+      >
+        <div className="absolute inset-0 bg-charcoal-950/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-900/80 to-transparent" />
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-3xl" />
