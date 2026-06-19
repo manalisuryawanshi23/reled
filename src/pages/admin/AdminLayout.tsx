@@ -17,31 +17,34 @@ import {
   X,
   ChevronRight,
   Layers,
+  Users,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
 
-const navItems = [
-  { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-  { name: 'Products', path: '/admin/products', icon: Package },
-  { name: 'Categories', path: '/admin/categories', icon: FolderTree },
-  { name: 'Subcategories', path: '/admin/subcategories', icon: Layers },
-  { name: 'Enquiries', path: '/admin/enquiries', icon: Mail },
-  { name: 'Gallery', path: '/admin/gallery', icon: Image },
-  { name: 'Catalogues', path: '/admin/catalogues', icon: FileText },
-  { name: 'Testimonials', path: '/admin/testimonials', icon: MessageSquare },
-  { name: 'FAQs', path: '/admin/faqs', icon: HelpCircle },
-  { name: 'Sectors', path: '/admin/sectors', icon: Building2 },
-  { name: 'Settings', path: '/admin/settings', icon: Settings },
-];
-
 export function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
   const { settings } = useSettings();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const navItems = [
+    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Products', path: '/admin/products', icon: Package },
+    { name: 'Categories', path: '/admin/categories', icon: FolderTree },
+    { name: 'Subcategories', path: '/admin/subcategories', icon: Layers },
+    { name: 'Enquiries', path: '/admin/enquiries', icon: Mail },
+    { name: 'Gallery', path: '/admin/gallery', icon: Image },
+    { name: 'Catalogues', path: '/admin/catalogues', icon: FileText },
+    { name: 'Testimonials', path: '/admin/testimonials', icon: MessageSquare },
+    { name: 'FAQs', path: '/admin/faqs', icon: HelpCircle },
+    { name: 'Sectors', path: '/admin/sectors', icon: Building2 },
+    // Only show Users to admins
+    ...(isAdmin ? [{ name: 'Users & Roles', path: '/admin/users', icon: Users }] : []),
+    { name: 'Settings', path: '/admin/settings', icon: Settings },
+  ];
 
   const handleSignOut = async () => {
     await signOut();

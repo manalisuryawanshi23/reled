@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin, ArrowRight, Send } from 'lucide-react';
+import { Zap, Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin, ArrowRight, Send, Lock } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { supabase } from '../lib/supabase';
 import type { Category } from '../lib/types';
@@ -206,12 +206,17 @@ export function Footer() {
             <p className="text-slate-500 text-xs text-center sm:text-left">
               © {currentYear} {settings.company_name}. All rights reserved. | Developed By <a href="https://www.manalitheboss.com/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors">Manali The Boss</a>
             </p>
-            <div className="flex gap-5 text-xs">
+            <div className="flex gap-5 text-xs items-center">
               <Link to="/privacy" className="text-slate-500 hover:text-primary-400 transition-colors">
                 Privacy Policy
               </Link>
               <Link to="/terms" className="text-slate-500 hover:text-primary-400 transition-colors">
                 Terms &amp; Conditions
+              </Link>
+              <span className="text-charcoal-800">|</span>
+              <Link to="/admin/login" className="text-slate-500 hover:text-primary-400 transition-colors flex items-center gap-1 opacity-50 hover:opacity-100" title="Admin Access">
+                <Lock className="w-3 h-3" />
+                <span>Admin</span>
               </Link>
             </div>
           </div>

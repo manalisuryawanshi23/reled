@@ -23,6 +23,7 @@ import { AdminTestimonials } from './pages/admin/AdminTestimonials';
 import { AdminFAQs } from './pages/admin/AdminFAQs';
 import { AdminSectors } from './pages/admin/AdminSectors';
 import { AdminSettings } from './pages/admin/AdminSettings';
+import { AdminUsers } from './pages/admin/AdminUsers';
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -88,6 +89,7 @@ function AppRoutes() {
         <Route path="faqs" element={<AdminFAQs />} />
         <Route path="sectors" element={<AdminSectors />} />
         <Route path="settings" element={<AdminSettings />} />
+        <Route path="users" element={<AdminUsers />} />
       </Route>
     </Routes>
   );

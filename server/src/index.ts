@@ -58,17 +58,41 @@ async function bootstrapDatabase() {
 
     const settingsExists = tableCheck.rows[0].exists;
     if (!settingsExists) {
-      console.log('Database tables not found. Bootstrapping from database_backup.sql...');
-      const sqlPath = path.join(__dirname, '../../database_backup.sql');
-      if (fs.existsSync(sqlPath)) {
-        const sqlContent = fs.readFileSync(sqlPath, 'utf8');
-        await pool.query(sqlContent);
-        console.log('Database successfully bootstrapped and seeded with sample data.');
-      } else {
-        console.error('Could not find database_backup.sql file at:', sqlPath);
-      }
-    } else {
-      console.log('Database tables verified. Settings table is present.');
+      console.log('Database tables not found. Running initialization schema...');
+      const schemaSql = fs.readFileSync(path.join(__dirname, '../../database_backup.sql'), 'utf8');
+      await pool.query(schemaSql);
+      console.log('Database schema initialized.');
+    }
+
+    // Check if users table exists and create it if not
+    const usersTableCheck = await pool.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'users'
+      );
+    `);
+    
+    if (!usersTableCheck.rows[0].exists) {
+      console.log('Users table not found. Creating users table...');
+      await pool.query(`
+        CREATE TABLE users (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          email VARCHAR(255) UNIQUE NOT NULL,
+          password_hash VARCHAR(255) NOT NULL,
+          role VARCHAR(50) DEFAULT 'editor',
+          created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        );
+      `);
+      
+      // Seed default admin user
+      const bcrypt = require('bcryptjs');
+      const hash = await bcrypt.hash(ADMIN_PASSWORD, 10);
+      await pool.query(
+        `INSERT INTO users (id, email, password_hash, role) VALUES ($1, $2, $3, 'admin')`,
+        [ADMIN_USER_ID, ADMIN_EMAIL, hash]
+      );
+      console.log('Default admin user seeded.');
     }
   } catch (error: any) {
     console.error('Failed to bootstrap database:', error.message);
@@ -96,6 +120,65 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
 }
 // Middleware to protect administrative routes (POST, PUT, DELETE)
 // Public actions like GET, and submitting enquiries (POST /api/enquiries) are allowed.
+// =================================================================
+// USER MANAGEMENT ENDPOINTS (Admin Only)
+// =================================================================
+app.get('/api/users', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const dbRes = await pool.query('SELECT id, email, role, created_at FROM users ORDER BY created_at DESC');
+    return res.json(dbRes.rows);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/users', authenticateToken, async (req: Request, res: Response) => {
+  // @ts-ignore
+  if (req.user?.role !== 'admin' && req.user?.userId !== ADMIN_USER_ID) {
+    return res.status(403).json({ error: 'Only admins can create users' });
+  }
+
+  const { email, password, role } = req.body;
+  if (!email || !password || !role) {
+    return res.status(400).json({ error: 'Email, password, and role are required' });
+  }
+
+  try {
+    const bcrypt = require('bcryptjs');
+    const hash = await bcrypt.hash(password, 10);
+    const dbRes = await pool.query(
+      `INSERT INTO users (email, password_hash, role) VALUES ($1, $2, $3) RETURNING id, email, role, created_at`,
+      [email, hash, role]
+    );
+    return res.json(dbRes.rows[0]);
+  } catch (error: any) {
+    if (error.code === '23505') return res.status(400).json({ error: 'Email already exists' });
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/api/users/:id', authenticateToken, async (req: Request, res: Response) => {
+  // @ts-ignore
+  if (req.user?.role !== 'admin' && req.user?.userId !== ADMIN_USER_ID) {
+    return res.status(403).json({ error: 'Only admins can delete users' });
+  }
+  
+  const { id } = req.params;
+  if (id === ADMIN_USER_ID || id === (req as any).user?.userId) {
+    return res.status(400).json({ error: 'Cannot delete yourself or the primary admin' });
+  }
+
+  try {
+    await pool.query('DELETE FROM users WHERE id = $1', [id]);
+    return res.json({ success: true });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// =================================================================
+// AUTH MIDDLEWARE EXCEPTION
+// =================================================================
 app.use('/api/:table', (req: Request, res: Response, next: NextFunction) => {
   const { table } = req.params;
   
@@ -117,31 +200,49 @@ app.use('/api/:table', (req: Request, res: Response, next: NextFunction) => {
 // =================================================================
 // AUTHENTICATION ENDPOINTS (Supabase GoTrue Equivalents)
 // =================================================================
-app.post('/api/auth/login', (req: Request, res: Response) => {
+const bcrypt = require('bcryptjs');
+
+app.post('/api/auth/login', async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+  try {
+    const userRes = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (userRes.rowCount === 0) {
+      return res.status(401).json({ error: { message: 'Invalid email or password' } });
+    }
+
+    const user = userRes.rows[0];
+    const validPassword = await bcrypt.compare(password, user.password_hash);
+    
+    if (!validPassword) {
+      return res.status(401).json({ error: { message: 'Invalid email or password' } });
+    }
+
     // Generate JWT
-    const token = jwt.sign({ userId: ADMIN_USER_ID, email }, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, role: user.role }, 
+      JWT_SECRET, 
+      { expiresIn: '24h' }
+    );
+    
     return res.json({
       session: {
         access_token: token,
         token_type: 'bearer',
         expires_in: 86400,
         user: {
-          id: ADMIN_USER_ID,
-          email: ADMIN_EMAIL,
-          created_at: new Date().toISOString(),
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          created_at: user.created_at,
         }
       },
       error: null
     });
+  } catch (error: any) {
+    console.error('Login error:', error);
+    return res.status(500).json({ error: { message: 'Internal server error' } });
   }
-
-  return res.status(400).json({
-    session: null,
-    error: { message: 'Invalid login credentials' }
-  });
 });
 
 app.post('/api/auth/logout', (req: Request, res: Response) => {
@@ -193,7 +294,7 @@ app.post('/api/upload', authenticateToken, upload.single('file'), (req: Request,
 // GET: Query table items
 app.get('/api/:table', async (req: Request, res: Response) => {
   const { table } = req.params;
-  const { id, select, single, order, limit, ...filters } = req.query;
+  const { id, select, single, order, limit, offset, ...filters } = req.query;
 
   // List of valid database tables
   const allowedTables = [
@@ -276,16 +377,25 @@ app.get('/api/:table', async (req: Request, res: Response) => {
 
     // Apply ordering
     if (order) {
-      const orderStr = order as string;
+      const orderStr = typeof order === 'string' ? order : String(Array.isArray(order) ? order[0] : order);
       const [col, dir] = orderStr.split(':');
       const cleanCol = (table === 'products' && col === 'created_at') ? 'p.created_at' : col;
       queryText += ` ORDER BY ${cleanCol} ${dir === 'desc' ? 'DESC' : 'ASC'}`;
     }
 
-    if (req.query.limit) {
-      const limitVal = parseInt(req.query.limit as string);
-      if (!isNaN(limitVal)) {
+    // Apply limit
+    if (limit) {
+      const limitVal = parseInt(typeof limit === 'string' ? limit : String(Array.isArray(limit) ? limit[0] : limit));
+      if (!isNaN(limitVal) && limitVal > 0) {
         queryText += ` LIMIT ${limitVal}`;
+      }
+    }
+
+    // Apply offset
+    if (offset) {
+      const offsetVal = parseInt(typeof offset === 'string' ? offset : String(Array.isArray(offset) ? offset[0] : offset));
+      if (!isNaN(offsetVal) && offsetVal >= 0) {
+        queryText += ` OFFSET ${offsetVal}`;
       }
     }
 
@@ -308,6 +418,11 @@ app.post('/api/:table', async (req: Request, res: Response) => {
   const payload = req.body;
 
   try {
+    // Strip virtual joined fields that frontend might accidentally send back
+    delete payload.category;
+    delete payload.subcategory;
+    delete payload.parent;
+
     const keys = Object.keys(payload);
     const values = Object.values(payload);
 
@@ -352,6 +467,11 @@ app.put('/api/:table', async (req: Request, res: Response) => {
   }
 
   try {
+    // Strip virtual joined fields
+    delete payload.category;
+    delete payload.subcategory;
+    delete payload.parent;
+
     const keys = Object.keys(payload);
     const values = Object.values(payload);
 
