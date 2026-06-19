@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: ledprisha-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-deergh}
+      POSTGRES_DB: ${POSTGRES_DB:-ledprisha}
+    ports:
+      - "5438:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database_backup.sql:/docker-entrypoint-initdb.d/database_backup.sql
+    networks:
+      - ledprisha-net
+
+  backend:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ledprisha-backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - PORT=5000
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-deergh}@db:5432/${POSTGRES_DB:-ledprisha}
+      - JWT_SECRET=${JWT_SECRET:-super_secret_ledprisha_jwt_key_2026}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@ledprisha.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-adminpassword}
+      - UPLOADS_DIR=/app/uploads
+    # Notice we do NOT expose port 5000 to the host machine. 
+    # It is only accessible inside the ledprisha-net network by the Nginx container.
+    volumes:
+      - ./public/uploads:/app/uploads
+    networks:
+      - ledprisha-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ledprisha-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "4011:80"
+    networks:
+      - ledprisha-net
+
+networks:
+  ledprisha-net:
+    driver: bridge
+
+volumes:
+  pgdata:
