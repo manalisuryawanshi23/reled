@@ -183,10 +183,6 @@ export function Navbar() {
                 <Clock className="w-3.5 h-3.5" />
                 Mon - Sat: 9:00 AM - 6:00 PM
               </span>
-              <span className="hidden lg:flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5" />
-                {settings.address}
-              </span>
             </div>
           </div>
         </div>
