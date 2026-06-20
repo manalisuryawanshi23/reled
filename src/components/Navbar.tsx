@@ -70,19 +70,29 @@ export function Navbar() {
   }, []);
 
   const handleInstallApp = async () => {
-    if (!installPrompt) {
-      alert(
-        "To install this app on your device:\n\n" +
-        "• iOS Safari: Tap the 'Share' icon at the bottom, then 'Add to Home Screen'\n" +
-        "• Android/Chrome: Tap the 3-dot menu, then 'Install App' or 'Add to Home Screen'\n\n" +
-        "(Note: The native prompt requires HTTPS in production)"
-      );
+    // Try React state first, then window fallback
+    const prompt = installPrompt || (window as any).__pwaInstallPrompt;
+    if (!prompt) {
+      // iOS doesn't support beforeinstallprompt, show manual instructions
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      if (isIOS) {
+        alert("To install on iPhone/iPad:\n\n1. Tap the Share button (□↑) at the bottom of Safari\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' in the top-right corner");
+      } else {
+        alert("To install this app:\n\n• Chrome/Edge: Tap the 3-dot menu → 'Install App' or 'Add to Home Screen'\n• Firefox: Tap the 3-dot menu → 'Install'\n\nNote: The app must be visited over HTTPS for installation to work.");
+      }
       setIsOpen(false);
       return;
     }
-    installPrompt.prompt();
-    const { outcome } = await installPrompt.userChoice;
-    if (outcome === 'accepted') setInstallPrompt(null);
+    try {
+      await prompt.prompt();
+      const { outcome } = await prompt.userChoice;
+      if (outcome === 'accepted') {
+        setInstallPrompt(null);
+        (window as any).__pwaInstallPrompt = null;
+      }
+    } catch (err) {
+      console.error('PWA install error:', err);
+    }
     setIsOpen(false);
   };
 
@@ -466,7 +476,7 @@ export function Navbar() {
 
       {/* Mobile Menu - Full Screen Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 bg-white transition-transform duration-300 ease-out ${
+        className={`lg:hidden fixed inset-0 z-[60] bg-white transition-transform duration-300 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -492,7 +502,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="h-full overflow-y-auto pb-24">
+        <div className="h-full overflow-y-auto pb-48">
           {/* Mobile Nav Links */}
           <div className="p-4 space-y-1">
             {navLinks.map((link) => (
@@ -611,7 +621,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile Contact CTA */}
-          <div className="sticky bottom-0 bg-white border-t border-slate-100 p-4 mt-4 space-y-2">
+          <div className="sticky bottom-0 z-10 bg-white border-t border-slate-100 p-4 mt-4 space-y-2">
             <Link
               to="/contact"
               className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-primary-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg"
