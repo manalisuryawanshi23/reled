@@ -42,14 +42,31 @@ export function Navbar() {
   const { settings } = useSettings();
   const [installPrompt, setInstallPrompt] = useState<any>(null);
 
-  // Capture PWA install prompt
+  // Capture PWA install prompt - read early-captured value first, then listen for late events
   useEffect(() => {
+    // Check if prompt was already captured before React mounted
+    if ((window as any).__pwaInstallPrompt) {
+      setInstallPrompt((window as any).__pwaInstallPrompt);
+    }
+
+    // Also listen for the custom event (fired when prompt captured after React mounts)
+    const onReady = () => {
+      setInstallPrompt((window as any).__pwaInstallPrompt);
+    };
+    window.addEventListener('pwaInstallReady', onReady);
+
+    // Fallback: also listen directly in case of race conditions
     const handler = (e: Event) => {
       e.preventDefault();
+      (window as any).__pwaInstallPrompt = e;
       setInstallPrompt(e);
     };
     window.addEventListener('beforeinstallprompt', handler as EventListener);
-    return () => window.removeEventListener('beforeinstallprompt', handler as EventListener);
+
+    return () => {
+      window.removeEventListener('pwaInstallReady', onReady);
+      window.removeEventListener('beforeinstallprompt', handler as EventListener);
+    };
   }, []);
 
   const handleInstallApp = async () => {

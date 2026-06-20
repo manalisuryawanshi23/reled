@@ -8,18 +8,26 @@ interface MobileBottomBarProps {
 }
 
 export function MobileBottomBar({ onMenuClick }: MobileBottomBarProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const location = useLocation();
   const { settings } = useSettings();
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      // Show the bar after scrolling down 100px
-      if (window.scrollY > 100) {
+      const currentScrollY = window.scrollY;
+      // Always show at the top of the page
+      if (currentScrollY < 50) {
         setIsVisible(true);
-      } else {
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling DOWN — hide
         setIsVisible(false);
+      } else {
+        // Scrolling UP — show
+        setIsVisible(true);
       }
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
