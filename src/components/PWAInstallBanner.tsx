@@ -96,6 +96,13 @@ export function PWAInstallBanner() {
       }
     } else if (platform === 'ios') {
       setShowIOSSteps(true);
+    } else {
+      alert(
+        "Automatic installation is currently unavailable.\n\n" +
+        "This usually means one of two things:\n" +
+        "1. The app is ALREADY installed on your device (check your apps/home screen).\n" +
+        "2. Your browser requires you to install it manually (tap the 3-dot menu and select 'Install App' or 'Add to Home Screen')."
+      );
     }
   };
 

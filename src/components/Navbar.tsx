@@ -78,7 +78,12 @@ export function Navbar() {
       if (isIOS) {
         alert("To install on iPhone/iPad:\n\n1. Tap the Share button (□↑) at the bottom of Safari\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' in the top-right corner");
       } else {
-        alert("To install this app:\n\n• Chrome/Edge: Tap the 3-dot menu → 'Install App' or 'Add to Home Screen'\n• Firefox: Tap the 3-dot menu → 'Install'\n\nNote: The app must be visited over HTTPS for installation to work.");
+        alert(
+          "Automatic installation is currently unavailable.\n\n" +
+          "This usually means one of two things:\n" +
+          "1. The app is ALREADY installed on your device (check your apps/home screen).\n" +
+          "2. Your browser requires you to install it manually (Chrome: Tap 3-dot menu → 'Install App')."
+        );
       }
       setIsOpen(false);
       return;
