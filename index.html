@@ -14,21 +14,9 @@
     <!-- PWA will be injected by vite-plugin-pwa -->
     <meta name="theme-color" content="#f59e0b" />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-
-    <!-- Capture PWA install prompt EARLY before React loads -->
-    <script>
-      window.__pwaInstallPrompt = null;
-      window.addEventListener('beforeinstallprompt', function(e) {
-        e.preventDefault();
-        window.__pwaInstallPrompt = e;
-        // Dispatch custom event so any React listener can also pick it up
-        window.dispatchEvent(new Event('pwaInstallReady'));
-      });
-    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

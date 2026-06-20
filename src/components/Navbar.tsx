@@ -40,67 +40,7 @@ export function Navbar() {
   const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const location = useLocation();
   const { settings } = useSettings();
-  const [installPrompt, setInstallPrompt] = useState<any>(null);
-
-  // Capture PWA install prompt - read early-captured value first, then listen for late events
-  useEffect(() => {
-    // Check if prompt was already captured before React mounted
-    if ((window as any).__pwaInstallPrompt) {
-      setInstallPrompt((window as any).__pwaInstallPrompt);
-    }
-
-    // Also listen for the custom event (fired when prompt captured after React mounts)
-    const onReady = () => {
-      setInstallPrompt((window as any).__pwaInstallPrompt);
-    };
-    window.addEventListener('pwaInstallReady', onReady);
-
-    // Fallback: also listen directly in case of race conditions
-    const handler = (e: Event) => {
-      e.preventDefault();
-      (window as any).__pwaInstallPrompt = e;
-      setInstallPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler as EventListener);
-
-    return () => {
-      window.removeEventListener('pwaInstallReady', onReady);
-      window.removeEventListener('beforeinstallprompt', handler as EventListener);
-    };
-  }, []);
-
-  const handleInstallApp = async () => {
-    // Try React state first, then window fallback
-    const prompt = installPrompt || (window as any).__pwaInstallPrompt;
-    if (!prompt) {
-      // iOS doesn't support beforeinstallprompt, show manual instructions
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      if (isIOS) {
-        alert("To install on iPhone/iPad:\n\n1. Tap the Share button (□↑) at the bottom of Safari\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' in the top-right corner");
-      } else {
-        alert(
-          "Automatic installation is currently unavailable.\n\n" +
-          "This usually means one of two things:\n" +
-          "1. The app is ALREADY installed on your device (check your apps/home screen).\n" +
-          "2. Your browser requires you to install it manually (Chrome: Tap 3-dot menu → 'Install App')."
-        );
-      }
-      setIsOpen(false);
-      return;
-    }
-    try {
-      await prompt.prompt();
-      const { outcome } = await prompt.userChoice;
-      if (outcome === 'accepted') {
-        setInstallPrompt(null);
-        (window as any).__pwaInstallPrompt = null;
-      }
-    } catch (err) {
-      console.error('PWA install error:', err);
-    }
-    setIsOpen(false);
-  };
-
+  // PWA logic removed
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -635,17 +575,6 @@ export function Navbar() {
               Get a Quote
               <ArrowRight className="w-4 h-4" />
             </Link>
-
-            {/* PWA Install App Button */}
-            <button
-              onClick={handleInstallApp}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-charcoal-900 hover:bg-charcoal-950 text-white font-semibold rounded-xl transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Install App
-            </button>
 
             {settings.phone_1 && (
               <a

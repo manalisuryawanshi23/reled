@@ -4,7 +4,6 @@ import { SettingsProvider } from './context/SettingsContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingButtons } from './components/FloatingButtons';
-import { PWAInstallBanner } from './components/PWAInstallBanner';
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { GalleryPage } from './pages/GalleryPage';
@@ -102,7 +101,6 @@ function App() {
       <AuthProvider>
         <SettingsProvider>
           <AppRoutes />
-          <PWAInstallBanner />
         </SettingsProvider>
       </AuthProvider>
     </Router>
