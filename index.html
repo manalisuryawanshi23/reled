@@ -11,13 +11,7 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- PWA -->
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#f59e0b" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="RELED" />
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <!-- PWA will be injected by vite-plugin-pwa -->
 
     <!-- Capture PWA install prompt EARLY before React loads -->
     <script>
@@ -33,17 +27,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Service Worker Registration -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/sw.js').then(
-            function (reg) { console.log('RELED SW registered:', reg.scope); },
-            function (err) { console.log('RELED SW registration failed:', err); }
-          );
-        });
-      }
-    </script>
   </body>
 </html>
 
