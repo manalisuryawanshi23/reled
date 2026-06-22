@@ -73,6 +73,26 @@ export function AdminSettings() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Logo Upload */}
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <h2 className="font-heading font-semibold text-lg text-dark-900 mb-1">Website Logo</h2>
+          <p className="text-dark-400 text-sm mb-4">Upload your company logo. It will appear in the Navbar and Footer. Recommended: PNG with transparent background, min 200px height.</p>
+          <div className="max-w-sm">
+            <ImageUploadField
+              label="Logo Image"
+              value={formData.logo_url || ''}
+              onChange={(url) => setFormData(prev => ({ ...prev, logo_url: url }))}
+              placeholder="https://..."
+            />
+          </div>
+          {formData.logo_url && (
+            <div className="mt-4 p-4 bg-dark-900 rounded-xl inline-flex items-center gap-3">
+              <span className="text-dark-400 text-xs">Preview on dark background:</span>
+              <img src={formData.logo_url} alt="Logo preview" className="h-10 w-auto object-contain" />
+            </div>
+          )}
+        </div>
+
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Company Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

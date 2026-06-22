@@ -1,10 +1,110 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Search, ArrowLeft, X, Upload, Image as ImageIcon } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, ArrowLeft, X, Upload, Image as ImageIcon, GripVertical } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import type { Product, Category, Subcategory } from '../../lib/types';
 import { ImageUploadField } from '../../components/ImageUploadField';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
+// ─── Types ─────────────────────────────────────────────────────────────────────
+interface SpecEntry {
+  id: string;
+  key: string;
+  value: string;
+}
+
+// Convert DB specs (object or array) → internal ordered array
+function specsToArray(raw: any): SpecEntry[] {
+  if (!raw) return [];
+  if (Array.isArray(raw)) {
+    return raw.map((s: any, i: number) => ({ id: String(s.id ?? i), key: s.key || '', value: s.value || '' }));
+  }
+  return Object.entries(raw).map(([key, value], i) => ({ id: String(i), key, value: String(value) }));
+}
+
+// Convert internal array → DB array format (preserves order)
+function specsToDb(specs: SpecEntry[]): Array<{ key: string; value: string }> {
+  return specs.map(({ key, value }) => ({ key, value }));
+}
+
+// ─── Sortable Spec Row ─────────────────────────────────────────────────────────
+function SortableSpecRow({
+  spec,
+  onUpdate,
+  onRemove,
+}: {
+  spec: SpecEntry;
+  onUpdate: (id: string, field: 'key' | 'value', val: string) => void;
+  onRemove: (id: string) => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: spec.id });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : undefined,
+    opacity: isDragging ? 0.85 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`flex items-center gap-2 p-2.5 rounded-lg border ${isDragging ? 'bg-primary-50 border-primary-300 shadow-lg' : 'bg-dark-50 border-dark-100'}`}
+    >
+      <button
+        type="button"
+        {...attributes}
+        {...listeners}
+        className="p-1 cursor-grab active:cursor-grabbing text-dark-300 hover:text-dark-500 flex-shrink-0"
+        title="Drag to reorder"
+      >
+        <GripVertical className="w-4 h-4" />
+      </button>
+      <input
+        type="text"
+        value={spec.key}
+        onChange={(e) => onUpdate(spec.id, 'key', e.target.value)}
+        className="input-field py-1.5 text-sm font-medium w-1/3 flex-shrink-0"
+        placeholder="Key (e.g., Wattage)"
+      />
+      <span className="text-dark-300 flex-shrink-0">:</span>
+      <input
+        type="text"
+        value={spec.value}
+        onChange={(e) => onUpdate(spec.id, 'value', e.target.value)}
+        className="input-field py-1.5 text-sm flex-1"
+        placeholder="Value (e.g., 50W)"
+      />
+      <button
+        type="button"
+        onClick={() => onRemove(spec.id)}
+        className="p-1.5 text-dark-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
+        title="Remove specification"
+      >
+        <X className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
+
+// ─── AdminProducts List ────────────────────────────────────────────────────────
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -83,9 +183,7 @@ export function AdminProducts() {
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
+              <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}
           </select>
         </div>
@@ -120,9 +218,9 @@ export function AdminProducts() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 bg-dark-100 rounded-lg flex items-center justify-center overflow-hidden">
-                          {product.cover_image_url || product.images[0] ? (
+                          {product.cover_image_url || (product.images as string[])[0] ? (
                             <img
-                              src={product.cover_image_url || product.images[0]}
+                              src={product.cover_image_url || (product.images as string[])[0]}
                               alt={product.name}
                               className="w-full h-full object-cover"
                             />
@@ -133,9 +231,7 @@ export function AdminProducts() {
                         <div>
                           <p className="font-medium text-dark-900">{product.name}</p>
                           {product.short_description && (
-                            <p className="text-dark-500 text-sm truncate max-w-xs">
-                              {product.short_description}
-                            </p>
+                            <p className="text-dark-500 text-sm truncate max-w-xs">{product.short_description}</p>
                           )}
                         </div>
                       </div>
@@ -183,6 +279,7 @@ export function AdminProducts() {
   );
 }
 
+// ─── AdminProductForm ──────────────────────────────────────────────────────────
 export function AdminProductForm() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -196,14 +293,19 @@ export function AdminProductForm() {
     subcategory_id: '',
     short_description: '',
     full_description: '',
-    specifications: {} as Record<string, string>,
     images: [] as string[],
     cover_image_url: '',
     status: 'active' as 'active' | 'inactive',
   });
+  const [specs, setSpecs] = useState<SpecEntry[]>([]);
   const [newSpecKey, setNewSpecKey] = useState('');
   const [newSpecValue, setNewSpecValue] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
 
   useEffect(() => {
     fetchCategories();
@@ -221,9 +323,13 @@ export function AdminProductForm() {
     const { data } = await supabase
       .from('products')
       .select('*, category:categories(id), subcategory:subcategories(id)')
-      .eq('id', id)
+      .eq('id', id!)
       .single();
-    if (data) setFormData(data);
+    if (data) {
+      const { specifications, ...rest } = data;
+      setFormData(rest);
+      setSpecs(specsToArray(specifications));
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -232,30 +338,37 @@ export function AdminProductForm() {
   };
 
   const generateSlug = () => {
-    const slug = formData.name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+    const slug = formData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     setFormData((prev) => ({ ...prev, slug }));
   };
 
   const addSpecification = () => {
-    if (newSpecKey && newSpecValue) {
-      setFormData((prev) => ({
-        ...prev,
-        specifications: { ...prev.specifications, [newSpecKey]: newSpecValue },
-      }));
-      setNewSpecKey('');
-      setNewSpecValue('');
-    }
+    if (!newSpecKey.trim() || !newSpecValue.trim()) return;
+    setSpecs((prev) => [
+      ...prev,
+      { id: `${Date.now()}-${Math.random()}`, key: newSpecKey.trim(), value: newSpecValue.trim() },
+    ]);
+    setNewSpecKey('');
+    setNewSpecValue('');
   };
 
-  const removeSpecification = (key: string) => {
-    setFormData((prev) => {
-      const specs = { ...prev.specifications };
-      delete specs[key];
-      return { ...prev, specifications: specs };
-    });
+  const updateSpec = (specId: string, field: 'key' | 'value', val: string) => {
+    setSpecs((prev) => prev.map((s) => (s.id === specId ? { ...s, [field]: val } : s)));
+  };
+
+  const removeSpec = (specId: string) => {
+    setSpecs((prev) => prev.filter((s) => s.id !== specId));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      setSpecs((items) => {
+        const oldIndex = items.findIndex((i) => i.id === active.id);
+        const newIndex = items.findIndex((i) => i.id === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   const addImage = () => {
@@ -280,18 +393,20 @@ export function AdminProductForm() {
     });
   };
 
-  const setCoverImage = (imageUrl: string) => {
-    setFormData((prev) => ({ ...prev, cover_image_url: imageUrl }));
+  const setCoverImage = (imgUrl: string) => {
+    setFormData((prev) => ({ ...prev, cover_image_url: imgUrl }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { category, subcategory, ...rest } = formData;
+    const { category, subcategory, ...rest } = formData as any;
     const payload = {
       ...rest,
+      category_id: formData.category_id || null,
       subcategory_id: formData.subcategory_id || null,
+      specifications: specsToDb(specs),
     };
 
     let error;
@@ -309,9 +424,7 @@ export function AdminProductForm() {
     setLoading(false);
   };
 
-  const filteredSubcategories = subcategories.filter(
-    (sub) => sub.category_id === formData.category_id
-  );
+  const filteredSubcategories = subcategories.filter((sub) => sub.category_id === formData.category_id);
 
   return (
     <div>
@@ -328,23 +441,16 @@ export function AdminProductForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
+
+            {/* Basic Info */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Basic Information</h2>
               <div className="space-y-4">
                 <div>
                   <label className="input-label">Product Name *</label>
                   <div className="flex gap-2">
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="input-field flex-1"
-                      required
-                    />
-                    <button type="button" onClick={generateSlug} className="btn-secondary">
-                      Generate Slug
-                    </button>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} className="input-field flex-1" required />
+                    <button type="button" onClick={generateSlug} className="btn-secondary">Generate Slug</button>
                   </div>
                 </div>
                 <div>
@@ -356,95 +462,89 @@ export function AdminProductForm() {
                     <label className="input-label">Category</label>
                     <select name="category_id" value={formData.category_id} onChange={handleChange} className="input-field">
                       <option value="">Select category</option>
-                      {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>{cat.name}</option>
-                      ))}
+                      {categories.map((cat) => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="input-label">Subcategory</label>
                     <select name="subcategory_id" value={formData.subcategory_id} onChange={handleChange} className="input-field">
                       <option value="">Select subcategory</option>
-                      {filteredSubcategories.map((sub) => (
-                        <option key={sub.id} value={sub.id}>{sub.name}</option>
-                      ))}
+                      {filteredSubcategories.map((sub) => <option key={sub.id} value={sub.id}>{sub.name}</option>)}
                     </select>
                   </div>
                 </div>
                 <div>
                   <label className="input-label">Short Description</label>
-                  <textarea
-                    name="short_description"
-                    value={formData.short_description}
-                    onChange={handleChange}
-                    rows={2}
-                    className="input-field resize-none"
-                  />
+                  <textarea name="short_description" value={formData.short_description} onChange={handleChange} rows={2} className="input-field resize-none" />
                 </div>
                 <div>
                   <label className="input-label">Full Description</label>
-                  <textarea
-                    name="full_description"
-                    value={formData.full_description}
-                    onChange={handleChange}
-                    rows={5}
-                    className="input-field resize-none"
-                  />
+                  <textarea name="full_description" value={formData.full_description} onChange={handleChange} rows={5} className="input-field resize-none" />
                 </div>
               </div>
             </div>
 
+            {/* Specifications */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Specifications</h2>
-              <div className="space-y-3">
-                {Object.entries(formData.specifications).map(([key, value]) => (
-                  <div key={key} className="flex items-center gap-2 p-3 bg-dark-50 rounded-lg">
-                    <span className="font-medium text-dark-700 w-1/3">{key}</span>
-                    <span className="text-dark-500 flex-1">{value}</span>
-                    <button type="button" onClick={() => removeSpecification(key)} className="text-red-500 hover:text-red-600">
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Key (e.g., Wattage)"
-                    value={newSpecKey}
-                    onChange={(e) => setNewSpecKey(e.target.value)}
-                    className="input-field flex-1"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Value (e.g., 50W)"
-                    value={newSpecValue}
-                    onChange={(e) => setNewSpecValue(e.target.value)}
-                    className="input-field flex-1"
-                  />
-                  <button type="button" onClick={addSpecification} className="btn-secondary">
-                    Add
-                  </button>
-                </div>
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="font-heading font-semibold text-lg text-dark-900">Specifications</h2>
+                <span className="text-xs text-dark-400 bg-dark-50 px-2 py-1 rounded-lg">{specs.length} specs · drag ⠿ to reorder</span>
+              </div>
+              <p className="text-dark-400 text-xs mb-4">Add specs below, then drag the ⠿ handle to reorder. Order is saved to the database.</p>
+
+              <div className="space-y-2 mb-3">
+                {specs.length === 0 ? (
+                  <p className="text-dark-400 text-sm text-center py-4 bg-dark-50 rounded-lg">No specifications yet. Add one below.</p>
+                ) : (
+                  <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                    <SortableContext items={specs.map((s) => s.id)} strategy={verticalListSortingStrategy}>
+                      {specs.map((spec) => (
+                        <SortableSpecRow key={spec.id} spec={spec} onUpdate={updateSpec} onRemove={removeSpec} />
+                      ))}
+                    </SortableContext>
+                  </DndContext>
+                )}
+              </div>
+
+              {/* Add new spec */}
+              <div className="flex gap-2 mt-3 pt-3 border-t border-dark-100">
+                <input
+                  type="text"
+                  placeholder="Key (e.g., Wattage)"
+                  value={newSpecKey}
+                  onChange={(e) => setNewSpecKey(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSpecification(); } }}
+                  className="input-field flex-1 text-sm"
+                />
+                <input
+                  type="text"
+                  placeholder="Value (e.g., 50W)"
+                  value={newSpecValue}
+                  onChange={(e) => setNewSpecValue(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSpecification(); } }}
+                  className="input-field flex-1 text-sm"
+                />
+                <button type="button" onClick={addSpecification} className="btn-secondary flex items-center gap-1.5 text-sm px-4">
+                  <Plus className="w-4 h-4" />
+                  Add
+                </button>
               </div>
             </div>
 
+            {/* Images */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Images</h2>
               <div className="space-y-4">
-                {/* Cover image quick upload */}
                 <ImageUploadField
                   label="Cover Image"
                   value={formData.cover_image_url}
-                  onChange={(url) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      cover_image_url: url,
-                      images: url && !prev.images.includes(url) ? [...prev.images, url] : prev.images,
-                    }));
-                  }}
+                  onChange={(url) => setFormData((prev) => ({
+                    ...prev,
+                    cover_image_url: url,
+                    images: url && !prev.images.includes(url) ? [...prev.images, url] : prev.images,
+                  }))}
                 />
 
-                {/* Additional images */}
                 {formData.images.filter(img => img !== formData.cover_image_url).length > 0 && (
                   <div>
                     <p className="input-label mb-2">Additional Images</p>
@@ -454,16 +554,8 @@ export function AdminProductForm() {
                           <div key={index} className="relative group aspect-square bg-dark-100 rounded-lg overflow-hidden">
                             <img src={img} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-dark-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                              <button
-                                type="button"
-                                onClick={() => setCoverImage(img)}
-                                className="px-2 py-1 text-xs rounded bg-white text-dark-900 font-medium"
-                              >
-                                Set Cover
-                              </button>
-                              <button type="button" onClick={() => removeImage(index)} className="p-1 bg-red-500 text-white rounded">
-                                <X className="w-4 h-4" />
-                              </button>
+                              <button type="button" onClick={() => setCoverImage(img)} className="px-2 py-1 text-xs rounded bg-white text-dark-900 font-medium">Set Cover</button>
+                              <button type="button" onClick={() => removeImage(index)} className="p-1 bg-red-500 text-white rounded"><X className="w-4 h-4" /></button>
                             </div>
                           </div>
                         )
@@ -472,20 +564,12 @@ export function AdminProductForm() {
                   </div>
                 )}
 
-                {/* Add extra image via URL */}
                 <div>
                   <p className="input-label mb-2">Add More Images (URL)</p>
                   <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Additional image URL"
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      className="input-field flex-1 text-sm"
-                    />
+                    <input type="text" placeholder="Additional image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className="input-field flex-1 text-sm" />
                     <button type="button" onClick={addImage} className="btn-secondary flex items-center gap-2 text-sm">
-                      <Upload className="w-4 h-4" />
-                      Add
+                      <Upload className="w-4 h-4" /> Add
                     </button>
                   </div>
                 </div>
@@ -493,6 +577,7 @@ export function AdminProductForm() {
             </div>
           </div>
 
+          {/* Sidebar */}
           <div>
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
               <h2 className="font-heading font-semibold text-lg text-dark-900 mb-4">Publish</h2>

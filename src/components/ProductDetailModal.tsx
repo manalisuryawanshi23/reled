@@ -123,11 +123,18 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                   </div>
                 )}
 
-                {product.specifications && Object.keys(product.specifications).length > 0 && (
+                {product.specifications && (
+                  Array.isArray(product.specifications)
+                    ? product.specifications.length > 0
+                    : Object.keys(product.specifications).length > 0
+                ) && (
                   <div className="mb-8">
                     <h4 className="font-heading font-semibold text-charcoal-900 mb-4 border-b border-slate-100 pb-2">Specifications</h4>
                     <div className="border border-slate-100 rounded-2xl overflow-hidden divide-y divide-slate-100 shadow-sm bg-white">
-                      {Object.entries(product.specifications).map(([key, value]) => (
+                      {(Array.isArray(product.specifications)
+                        ? product.specifications.map((s: any) => [s.key, s.value])
+                        : Object.entries(product.specifications)
+                      ).map(([key, value]: [string, any]) => (
                         <div
                           key={key}
                           className="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50/50 transition-colors"

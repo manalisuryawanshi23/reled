@@ -68,8 +68,8 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" onClick={scrollTop} className="inline-flex items-center gap-3 mb-5 group">
               <img 
-                src="/logo.png" 
-                alt="Re LED" 
+                src={settings.logo_url || '/logo.png'} 
+                alt={settings.company_name || 'RELED'} 
                 className="h-14 w-auto object-contain bg-white rounded-lg p-1"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';

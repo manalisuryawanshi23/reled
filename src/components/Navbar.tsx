@@ -173,8 +173,8 @@ export function Navbar() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 md:gap-3 group flex-shrink-0">
               <img 
-                src="/logo.png" 
-                alt="Re LED" 
+                src={settings.logo_url || '/logo.png'} 
+                alt={settings.company_name || 'RELED'} 
                 className="h-12 md:h-14 w-auto object-contain"
                 onError={(e) => {
                   // Fallback to CSS logo if logo.png is missing
@@ -429,13 +429,19 @@ export function Navbar() {
         <div className="sticky top-0 bg-white border-b border-slate-100 z-10">
           <div className="flex items-center justify-between p-4">
             <Link to="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-400 via-primary-500 to-orange-500 rounded-xl flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <span className="font-bold text-base text-slate-900 block">{settings.company_name}</span>
-                <span className="text-[8px] text-primary-600 font-semibold tracking-widest uppercase">LIGHTING</span>
-              </div>
+              {settings.logo_url ? (
+                <img src={settings.logo_url} alt={settings.company_name || 'RELED'} className="h-10 w-auto object-contain" />
+              ) : (
+                <>
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-400 via-primary-500 to-orange-500 rounded-xl flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-base text-slate-900 block">{settings.company_name}</span>
+                    <span className="text-[8px] text-primary-600 font-semibold tracking-widest uppercase">LIGHTING</span>
+                  </div>
+                </>
+              )}
             </Link>
             <button
               onClick={() => setIsOpen(false)}

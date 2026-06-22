@@ -34,7 +34,7 @@ export interface Product {
   subcategory_id?: string;
   short_description?: string;
   full_description?: string;
-  specifications: Record<string, string>;
+  specifications: Record<string, string> | Array<{key: string; value: string}>;
   images: string[];
   cover_image_url?: string;
   status: 'active' | 'inactive';
@@ -145,6 +145,7 @@ export interface Settings {
   years_experience: number;
   projects_completed: number;
   iso_certified: boolean;
+  logo_url?: string;
   updated_at: string;
 }
 
